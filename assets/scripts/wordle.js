@@ -89,7 +89,7 @@ function checkWord(word) {
 			state[i] = TileState.Correct;
 	}
 	for (var i = 0; i < WORD_LENGTH; i++) {
-		if (state[i] != TileState.Invalid)
+		if (state[i] == TileState.Correct)
 			continue;
 		var answerChar = answer.charAt(i);
 		for (var j = 0; j < WORD_LENGTH; j++) {
