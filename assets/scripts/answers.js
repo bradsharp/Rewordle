@@ -2316,9 +2316,7 @@ var answers = [
 	"zonal"
 ]
 
-function getAnswer() {
-	var now = new Date();
-	var days = Math.floor(now / (1000 * 3600 * 24));
-	var random = new Math.seedrandom(days);
+function getAnswer(n) {
+	var random = new Math.seedrandom(n);
 	return answers[Math.floor(random.quick() * answers.length)];
 }

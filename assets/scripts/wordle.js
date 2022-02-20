@@ -22,11 +22,20 @@ const DisplayPriority = {
 var Board = document.getElementById('board');
 var Input = document.getElementById('keyboard');
 
-var hardMode = false;
-var answer = getAnswer();
-
+var now = new Date();
+var day = Math.floor(now / (1000 * 3600 * 24));
+var answer = getAnswer(day);
+var active = false;
 var guesses = [];
-var guess = "";
+var guess = '';
+
+function saveState() {
+	window.localStorage.setItem('state', JSON.stringify({
+		guesses: guesses,
+		solved: guess == answer,
+		day: day
+	}))
+}
 
 function isLetter(str) {
 	return str.length === 1 && str.match(/[a-z]/i);
@@ -44,6 +53,7 @@ function setRowText(index, text) {
 
 function updateGuess(word) {
 	guess = word.substring(0, WORD_LENGTH);
+	window.sessionStorage.setItem('guess', guess);
 	setRowText(guesses.length, guess);
 }
 
@@ -109,12 +119,22 @@ function submitGuess() {
 	var row = Board.children[guesses.length];
 	var result = checkWord(guess)
 	if (result) {
-		for (var i = 0; i < WORD_LENGTH; i++) {
+		active = false;
+		for (var i = 0; i < WORD_LENGTH; i++)
 			setTimeout(updateTile.bind(null, row.children[i], result[i]), i * FLIP_DELAY);
-		}
 		guesses.push(guess);
-		guess = '';
 		updateKeyboard();
+		setTimeout(() => {
+			if (guess == answer) {
+				active = false;
+				window.location.hash = "#results";
+			}
+			else {
+				guess = '';
+				active = true;
+			}
+		}, 5 * FLIP_DELAY);
+		saveState();
 	}
 	else {
 		if (row.classList.contains('shake'))
@@ -125,6 +145,8 @@ function submitGuess() {
 }
 
 function keypress(key) {
+	if (!active)
+		return;
 	if (key == "Enter")
 		submitGuess();
 	else if (key == "Backspace")
@@ -139,3 +161,27 @@ Input.querySelector('#submit.button').addEventListener('click', () => keypress('
 Input.querySelectorAll('.letter').forEach(button => {
 	button.addEventListener('click', () => keypress(button.value))
 });
+
+function load() {
+	var data = window.localStorage.getItem('state');
+	var state = data ? JSON.parse(data) : null;
+	console.log(state);
+	if (state && state.day == day) {
+		guesses = state.guesses;
+		for (var i = 0; i < guesses.length; i++) {
+			var word = guesses[i]
+			var row = Board.children[i];
+			setRowText(i, word);
+			var result = checkWord(word)
+			if (result) {
+				for (var j = 0; j < WORD_LENGTH; j++)
+					updateTile(row.children[j], result[j]);
+			}
+		}
+		if (state.solved)
+			return;
+	}
+	active = true;
+}
+
+load();
