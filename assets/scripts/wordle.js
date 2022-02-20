@@ -2,7 +2,6 @@ const FLIP_DELAY = 500;
 const SHAKE_DELAY = 800;
 const GUESS_LIMIT = 6;
 const WORD_LENGTH = 5;
-const SEED = 10962210;
 
 const TileState = {
 	None: 'none', // No state
