@@ -24,6 +24,9 @@ header {
 	padding: 0 12px;
 	height: 48px;
 	display: flex;
+	background-color: var(--white);
+	z-index: 3;
+	position: relative;
 }
 
 header a {
@@ -80,6 +83,7 @@ main > * {
 	align-items: center;
 	justify-content: center;
 	background-color: var(--white);
+	overflow-y: scroll;
 	z-index: 2;
 }
 
@@ -158,7 +162,7 @@ main > * {
 
 .heatmap {
 	display: grid;
-	grid-template-columns: 1fr 18fr;
+	grid-template-columns: 20px 1fr;
 	grid-template-rows: repeat(6, 16px);
 	gap: 6px;
 	width: 100%;
@@ -172,5 +176,6 @@ main > * {
 }
 
 .heatmap .label {
-	font-size: 16px; 
+	font-size: 16px;
+	line-height: 100%;
 }
