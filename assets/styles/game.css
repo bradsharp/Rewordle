@@ -1,0 +1,170 @@
+@import 'animate.css';
+
+:root {
+	--word-length: 5;
+	--tile-size: 60px;
+	--key-height: 1fr;
+	--key-width: 36px;
+	--key-width-slim: 18px;
+	--key-width-wide: 54px;
+	--keyboard-width: 480px;
+}
+
+input[type=button] {
+	border-radius: 4px;
+	border-width: 0;
+	font: inherit;
+	color: inherit;
+}
+
+.tile {
+	--background-color: var(--white);
+	--border-color: var(--light-grey);
+	--color: var(--black);
+}
+
+.tile[state=correct] {
+	--background-color: var(--green);
+	--border-color: var(--green);
+	--color: var(--white);
+}
+
+.tile[state=valid] {
+	--background-color: var(--yellow);
+	--border-color: var(--yellow);
+	--color: var(--white);
+}
+
+.tile[state=invalid] {
+	--background-color: var(--grey);
+	--border-color: var(--grey);
+	--color: var(--white);
+}
+
+.tile[state=wrong] {
+	--background-color: var(--red);
+	--border-color: var(--red);
+	color: var(--white);
+}
+
+#game {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#board {
+	flex-grow: 1;
+	display: grid;
+	align-content: center;
+	font-size: 36px;
+	font-weight: 700;
+	gap: 6px;
+}
+
+#board .row {
+	display: grid;
+	grid-template-columns: repeat(var(--word-length), var(--tile-size));
+	grid-template-rows: var(--tile-size);
+	gap: 6px;
+}
+
+#board .row.shake {
+	animation: shake 0.5s;
+}
+
+#board .tile {
+	box-sizing: border-box;
+	line-height: var(--tile-size);
+	text-align: center;
+	text-transform: uppercase;
+	transform-style: preserve-3d;
+	transition: transform 1s;
+}
+
+#board .tile .front, #board .tile .back {
+	color: var(--black);
+	border: var(--light-grey) solid 1px;
+	border-radius: 2px;
+	background-color: var(--white);
+	backface-visibility: hidden;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+}
+
+#board .tile .back {
+	transform: rotateY(180deg);
+	border: var(--border-color) solid 1px;
+	background-color: var(--background-color);
+	color: var(--color);
+}
+
+#board .tile[flipped=true] {
+	transform: rotateY(-180deg);
+}
+
+#keyboard {
+	flex: none;
+	width: 100%;
+	/* max-width: var(--keyboard-width); */
+	padding: 12px;
+}
+
+#keyboard .row {
+	display: grid;
+	justify-content: center;
+	grid-template-rows: var(--key-height);
+	height: 50px;
+	gap: 6px;
+	color: var(--dark-grey);
+	font-size: 14px;
+	font-weight: 700;
+}
+
+#keyboard .top, #keyboard .middle {
+	margin-bottom: 6px;
+}
+
+#keyboard .top {
+	grid-template-columns: repeat(10, var(--key-width));
+}
+
+#keyboard .middle {
+	grid-template-columns: repeat(9, var(--key-width));
+}
+
+#keyboard .bottom {
+	grid-template-columns: var(--key-width-wide) repeat(7, var(--key-width)) var(--key-width-wide);
+}
+
+#keyboard .letter {
+	background-color: var(--light-grey);
+	text-transform: uppercase;
+	transition: background-color 1s, color 1s;
+}
+
+#keyboard .letter[state=correct] {
+	background-color: var(--green);
+	color: var(--white);
+}
+
+#keyboard .letter[state=valid] {
+	background-color: var(--yellow);
+	color: var(--white);
+}
+
+#keyboard .letter[state=invalid] {
+	background-color: var(--grey);
+	color: var(--white);
+}
+
+#keyboard .letter[state=wrong] {
+	background-color: var(--red);
+	color: var(--white);
+}
+
+#keyboard .button {
+	background-color: var(--light-grey);
+}

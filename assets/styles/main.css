@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap');
+@import 'game.css';
+
+:root {
+	--header-height: 48px;
+}
+
+html, body {
+	height: 100%;
+	overflow: hidden;
+}
+
+div {
+	box-sizing: border-box;
+}
+
+body {
+	background-color: var(--white);
+	color: var(--black);
+	font-family: 'Nunito', sans-serif;
+}
+
+header {
+	padding: 0 12px;
+	height: 48px;
+	display: flex;
+}
+
+header a {
+	text-decoration: none;
+}
+
+header .title {
+	flex: 1;
+	text-align: center;
+	line-height: 48px;
+	font-size: 24px;
+	font-weight: 600;
+	text-transform: uppercase;
+	color: var(--black);
+}
+
+header .left, header .right {
+	line-height: var(--header-height);
+	font-size: 24px;
+	flex: none;	
+}
+
+header .button {
+	display: inline-block;
+	margin: 0 3px;
+	color: var(--light-grey);
+	cursor:pointer;
+}
+
+header .button:hover {
+	color: var(--black);
+}
+
+main {
+	height: calc(100% - var(--header-height));
+	position: relative;
+}
+
+main > * {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+}
+
+.hidden {
+	display: none !important;
+}
+
+.pane {
+	box-sizing: border-box;
+	padding: 12px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--white);
+	z-index: 2;
+}
+
+.pane section {
+	width: 100%;
+	max-width: 480px;
+	font-size: 16px;
+}
+
+.pane section > * {
+	margin-bottom: 12px;
+}
+
+.pane h1 {
+	font-size: 24px;
+	font-weight: 700;
+}
+
+.pane :last-child {
+	margin-bottom: 24px;
+}
+
+.pane .button {
+	width: 100px;
+	height: 40px;
+	color: var(--white);
+	display: inline-block;
+	background-color: var(--dark-grey);
+	border-radius: 6px;
+	text-decoration: none;
+	text-align: center;
+	line-height: 40px;
+	font-weight: 700;
+}
+
+.pane #share.button {
+	background-color: var(--green);
+}
+
+.example {
+	height: 40px;
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(var(--word-length), 40px);
+	gap: 6px;
+}
+
+.example .tile {
+	color: var(--color);
+	border: var(--border-color) solid 1px;
+	border-radius: 2px;
+	background-color: var(--background-color);
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	font-weight: 700;
+	text-align: center;
+}
+
+.stats {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 6px;
+	width: 100%;
+}
+
+.stats .value {
+	font-size: 16px; 
+	text-align: right;
+	margin-bottom: 6px;
+}
+
+.stats .label {
+	font-size: 16px; 
+}
+
+.heatmap {
+	display: grid;
+	grid-template-columns: 1fr 18fr;
+	grid-template-rows: repeat(6, 16px);
+	gap: 6px;
+	width: 100%;
+}
+
+.heatmap .bar {
+	border-radius: 6px;
+	background-color: var(--light-grey);
+	box-sizing: border-box;
+	height: 100%;
+}
+
+.heatmap .label {
+	font-size: 16px; 
+}
