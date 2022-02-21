@@ -59,10 +59,10 @@ function main() {
 					guesses.textContent = `You guessed it in ${guessCount} ${guessCount > 1 ? "turns" : "turn"}!`;
 				else
 					guesses.textContent = 'You failed to guess the word.';
-				outcome.classList.remove('hidden');
+				outcome.classList.remove('no-display');
 			}
 			else {
-				outcome.classList.add('hidden');
+				outcome.classList.add('no-display');
 			}
 		}
 
@@ -89,7 +89,8 @@ function main() {
 			let hours = date.getHours();
 			let minutes = date.getMinutes();
 			let seconds = date.getSeconds();
-			timer.textContent = `${23 - hours}:${59 - minutes}:${59 - seconds}` // TODO: 0-Padding
+			let pad = num => num < 10 ? `0${num}` : num.toString();
+			timer.textContent = `${pad(23 - hours)}:${pad(59 - minutes)}:${pad(59 - seconds)}` // TODO: 0-Padding
 		}
 
 		board.addEventListener('finished', event => {
@@ -137,7 +138,7 @@ function main() {
 				game.updateCurrentGuess(game.currentGuess + input.key);
 		});
 
-		// game.reset();
+		game.reset();
 		game.load();
 
 		updateGameStats();
@@ -149,12 +150,17 @@ function main() {
 
 	function setupNavigation() {
 
+		let gamePane = document.getElementById('game');
+
 		function updateLocation() {
 			document.querySelectorAll('.pane').forEach(element => element.classList.add('hidden'));
-			if (window.location.hash.length > 0) {
-				let selected = document.querySelector(window.location.hash);
-				if (selected)
-					selected.classList.remove('hidden');
+			let selected = window.location.hash.length > 0 ? document.querySelector(window.location.hash) : null;
+			if (selected) {
+				selected.classList.remove('hidden');
+				gamePane.classList.add('hidden');
+			}
+			else {
+				gamePane.classList.remove('hidden');
 			}
 		}
 

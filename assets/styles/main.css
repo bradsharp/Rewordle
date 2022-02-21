@@ -112,8 +112,13 @@ main > * {
 	transition: none !important;
 }
 
+.no-display {
+	display: none;
+}
+
 .hidden {
-	display: none !important;
+	opacity: 0 !important;
+	pointer-events: none;
 }
 
 .toast {
@@ -129,6 +134,10 @@ main > * {
 	font-size: 20px;
 }
 
+#game {
+	opacity: 1;
+}
+
 .pane {
 	box-sizing: border-box;
 	padding: 12px;
@@ -139,6 +148,8 @@ main > * {
 	background-color: var(--pane-background-color);
 	overflow-y: scroll;
 	z-index: 2;
+	opacity: 1;
+	transition: opacity 0.2s;
 }
 
 .pane section {
