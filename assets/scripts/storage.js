@@ -9,7 +9,6 @@ class Storage {
 	_storage = null;
 
 	set(key, value) {
-		console.log(`set: ${key} - ${value}`);
 		let id = `${this._scope}.${key}`;
 		this._storage[id] = JSON.stringify(value);
 	}
@@ -19,7 +18,6 @@ class Storage {
 		let value = defaultValue;
 		if (id in this._storage)
 			value = JSON.parse(this._storage[id]);
-		console.log(`get: ${key} - ${value} -> ${defaultValue}`);
 		return value;
 	}
 
