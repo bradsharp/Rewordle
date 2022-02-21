@@ -3,7 +3,22 @@
 :root {
 	--word-length: 5;
 	--tile-size: 60px;
+	--tile-font-size: 36px;
 	--keyboard-width: 480px;
+}
+
+@media screen and (max-width: 400px), screen and (max-height: 700px) {
+	:root {
+		--tile-size: 50px;
+		--tile-font-size: 30px;
+	}
+}
+
+@media screen and (max-width: 300px), screen and (max-height: 600px) {
+	:root {
+		--tile-size: 40px;
+		--tile-font-size: 24px;
+	}
 }
 
 .tile {
@@ -44,18 +59,24 @@
 }
 
 #board {
-	flex-grow: 1;
-	display: grid;
+	flex: 1 1 auto;
+	display: flex;
+	flex-direction: column;
 	align-content: center;
-	font-size: 36px;
+	justify-content: center;
+	font-size: var(--tile-font-size);
 	font-weight: 700;
+	width: 100%;
+	padding: 12px;
+	min-height: 0;
 	gap: 6px;
 }
 
 #board .row {
-	display: grid;
-	grid-template-columns: repeat(var(--word-length), var(--tile-size));
-	grid-template-rows: var(--tile-size);
+	flex: none;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
 	gap: 6px;
 }
 
@@ -64,8 +85,10 @@
 }
 
 #board .tile {
+	flex: none;
+	width: var(--tile-size);
+	height: var(--tile-size);
 	box-sizing: border-box;
-	line-height: var(--tile-size);
 	text-align: center;
 	text-transform: uppercase;
 	transform-style: preserve-3d;
@@ -73,11 +96,16 @@
 }
 
 #board .tile .front, #board .tile .back {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	vertical-align: middle;
 	border-radius: 2px;
 	backface-visibility: hidden;
 	position: absolute;
 	height: 100%;
 	width: 100%;
+	overflow: hidden;
 }
 
 #board .tile .front {
@@ -88,7 +116,6 @@
 
 #board .tile .back {
 	transform: rotateY(180deg);
-	border: var(--tile-border-color) solid 1px;
 	background-color: var(--tile-background-color);
 	color: var(--tile-text-color);
 }
@@ -97,7 +124,7 @@
 	transform: rotateY(-180deg);
 }
 
-#day {
+#board #day {
 	margin-top: 12px;
 	color: var(--subtle-text-color);
 	font-size: 18px;
