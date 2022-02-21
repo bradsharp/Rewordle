@@ -138,7 +138,7 @@ function main() {
 				game.updateCurrentGuess(game.currentGuess + input.key);
 		});
 
-		game.reset();
+		// game.reset();
 		game.load();
 
 		updateGameStats();
