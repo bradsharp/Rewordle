@@ -72,7 +72,7 @@ function main() {
 				if (stat in StatExpressions)
 					element.textContent = StatExpressions[stat]();
 			})
-			let guessDistribution = WordleStorage.get('guessDistribution', [0, 0, 0, 0, 0, 0]);
+			let guessDistribution = WordleStorage.get('guessDistribution', [1, 1, 1, 1, 1, 1]);
 			let max = Math.max(...guessDistribution);
 			let heatmap = results.querySelector('#game-heatmap .heatmap');
 			for (let i = 0; i < 6; i++) {
