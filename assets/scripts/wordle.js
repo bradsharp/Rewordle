@@ -19,169 +19,180 @@ const DisplayPriority = {
 	[TileState.Correct]: 4,
 }
 
-var Board = document.getElementById('board');
-var Input = document.getElementById('keyboard');
-
-var now = new Date();
-var day = Math.floor(now / (1000 * 3600 * 24));
-var answer = getAnswer(day);
-var active = false;
-var guesses = [];
-var guess = '';
-
-function saveState() {
-	window.localStorage.setItem('state', JSON.stringify({
-		guesses: guesses,
-		solved: guess == answer,
-		day: day
-	}))
-}
-
 function isLetter(str) {
 	return str.length === 1 && str.match(/[a-z]/i);
 }
 
-function setRowText(index, text) {
-	var row = Board.children[index];
-	for (var i = 0; i < 5; i++) {
-		var tile = row.children[i];
-		var char = text.charAt(i);
-		tile.querySelector('.front').textContent = char
-		tile.querySelector('.back').textContent = char
+class Wordle {
+
+	constructor(boardElement, keyboardElement) {
+		this.board = boardElement;
+		this.keyboard = keyboardElement;
 	}
-}
 
-function updateGuess(word) {
-	guess = word.substring(0, WORD_LENGTH);
-	window.sessionStorage.setItem('guess', guess);
-	setRowText(guesses.length, guess);
-}
+	day = 0;
+	answer = '';
+	currentGuess = '';
+	guesses = [];
+	solved = false;
+	finished = false;
 
-function deleteLastCharacter() {
-	updateGuess(guess.substring(0, guess.length - 1));
-}
+	board = null;
+	keyboard = null;
 
-function updateKeyboard() {
-	var characterState = {};
-	Input.querySelectorAll('.letter').forEach(button => characterState[button.value] = TileState.None);
-	for (var i = 0; i < guesses.length; i++) {
-		var word = guesses[i];
-		var wordState = checkWord(word);
-		if (wordState == null)
-			continue;
-		for (var j = 0; j < WORD_LENGTH; j++) {
-			var char = word.charAt(j);
-			if (DisplayPriority[wordState[j]] > DisplayPriority[characterState[char]])
-				characterState[char] = wordState[j];
+	checkWord(word) {
+		if (word.length < WORD_LENGTH)
+			return null;
+		if (!words.includes(word))
+			return null;
+		var state = (new Array(WORD_LENGTH)).fill(TileState.Invalid);
+		for (var i = 0; i < WORD_LENGTH; i++) {
+			if (word.charAt(i) == this.answer.charAt(i))
+				state[i] = TileState.Correct;
 		}
-	}
-	Input.querySelectorAll('.letter').forEach(button => button.setAttribute('state', characterState[button.value]));
-}
-
-function updateTile(tile, state) {
-	tile.setAttribute('state', state);
-	tile.setAttribute('flipped', true);
-}
-
-function stopShaking() {
-	this.classList.remove('shake');
-}
-
-function checkWord(word) {
-	if (word.length < WORD_LENGTH)
-		return null;
-	if (!words.includes(word))
-		return null;
-	var state = (new Array(WORD_LENGTH)).fill(TileState.Invalid);
-	for (var i = 0; i < WORD_LENGTH; i++) {
-		if (word.charAt(i) == answer.charAt(i))
-			state[i] = TileState.Correct;
-	}
-	for (var i = 0; i < WORD_LENGTH; i++) {
-		if (state[i] == TileState.Correct)
-			continue;
-		var answerChar = answer.charAt(i);
-		for (var j = 0; j < WORD_LENGTH; j++) {
-			if (state[j] != TileState.Invalid)
+		for (var i = 0; i < WORD_LENGTH; i++) {
+			if (state[i] == TileState.Correct)
 				continue;
-			if (word.charAt(j) == answerChar) {
-				state[j] = TileState.Valid;
-				break;
+			var answerChar = this.answer.charAt(i);
+			for (var j = 0; j < WORD_LENGTH; j++) {
+				if (state[j] != TileState.Invalid)
+					continue;
+				if (word.charAt(j) == answerChar) {
+					state[j] = TileState.Valid;
+					break;
+				}
 			}
 		}
+		return state;
 	}
-	return state;
-}
 
-function submitGuess() {
-	if (guesses.length >= GUESS_LIMIT)
-		return;
-	var row = Board.children[guesses.length];
-	var result = checkWord(guess)
-	if (result) {
-		active = false;
-		for (var i = 0; i < WORD_LENGTH; i++)
-			setTimeout(updateTile.bind(null, row.children[i], result[i]), i * FLIP_DELAY);
-		guesses.push(guess);
-		updateKeyboard();
-		setTimeout(() => {
-			if (guess == answer) {
-				active = false;
-				window.location.hash = "#results";
-			}
-			else {
-				guess = '';
-				active = true;
-			}
-		}, 5 * FLIP_DELAY);
-		saveState();
-	}
-	else {
-		if (row.classList.contains('shake'))
-			return;
-		row.classList.add('shake');
-		setTimeout(stopShaking.bind(row), SHAKE_DELAY);
-	}
-}
-
-function keypress(key) {
-	if (!active)
-		return;
-	if (key == "Enter")
-		submitGuess();
-	else if (key == "Backspace")
-		deleteLastCharacter();
-	else if (isLetter(key))
-		updateGuess(guess + key)
-}
-
-document.addEventListener('keydown', e => keypress(e.key));
-Input.querySelector('#delete.button').addEventListener('click', () => keypress('Backspace'));
-Input.querySelector('#submit.button').addEventListener('click', () => keypress('Enter'));
-Input.querySelectorAll('.letter').forEach(button => {
-	button.addEventListener('click', () => keypress(button.value))
-});
-
-function load() {
-	var data = window.localStorage.getItem('state');
-	var state = data ? JSON.parse(data) : null;
-	console.log(state);
-	if (state && state.day == day) {
-		guesses = state.guesses;
-		for (var i = 0; i < guesses.length; i++) {
-			var word = guesses[i]
-			var row = Board.children[i];
-			setRowText(i, word);
-			var result = checkWord(word)
-			if (result) {
-				for (var j = 0; j < WORD_LENGTH; j++)
-					updateTile(row.children[j], result[j]);
+	updateKeyboard() {
+		var characterState = {};
+		this.keyboard.querySelectorAll('.letter').forEach(button => characterState[button.value] = TileState.None);
+		for (var i = 0; i < this.guesses.length; i++) {
+			var word = this.guesses[i];
+			var wordState = this.checkWord(word);
+			if (wordState == null)
+				continue;
+			for (var j = 0; j < WORD_LENGTH; j++) {
+				var char = word.charAt(j);
+				if (DisplayPriority[wordState[j]] > DisplayPriority[characterState[char]])
+					characterState[char] = wordState[j];
 			}
 		}
-		if (state.solved)
-			return;
+		this.keyboard.querySelectorAll('.letter').forEach(button => button.setAttribute('state', characterState[button.value]));
 	}
-	active = true;
-}
 
-load();
+	updateTile(tile, state) {
+		tile.setAttribute('state', state);
+		tile.setAttribute('flipped', state != TileState.None);
+	}
+
+	updateRow(index, word, result=null, instant=false) {
+		var row = board.children[index];
+		for (var i = 0; i < 5; i++) {
+			var tile = row.children[i];
+			var char = word.charAt(i);
+			tile.querySelector('.front').textContent = char
+			tile.querySelector('.back').textContent = char
+		}
+		if (result) {
+			var delay = instant ? 0 : FLIP_DELAY;
+			for (var i = 0; i < WORD_LENGTH; i++)
+				setTimeout(this.updateTile.bind(this, row.children[i], result[i]), i * delay);
+		}
+	}
+
+	updateCurrentGuess(word) {
+		if (!this.active)
+			return;
+		this.currentGuess = word.substring(0, WORD_LENGTH);
+		this.updateRow(this.guesses.length, this.currentGuess);
+	}
+
+	updateDay() {
+		this.board.querySelector('#day').textContent = `#${this.day}`;
+	}
+
+	onComplete() {
+		this.finished = true;
+		this.board.dispatchEvent(new CustomEvent('finished'));
+	}
+
+	onRetry() {
+		if (this.guesses.length >= GUESS_LIMIT) {
+			this.onComplete();
+			return;
+		}
+		this.active = true;
+	}
+
+	makeGuess(word) {
+		if (!this.active)
+			return;
+		if (this.guesses.length >= GUESS_LIMIT)
+			return;
+		var result = this.checkWord(word);
+		if (result) {
+			this.active = false;
+			this.guesses.push(word);
+			this.currentGuess = '';
+			this.solved = word == this.answer;
+			this.updateRow(this.guesses.length - 1, word, result);
+			this.updateKeyboard();
+			this.board.dispatchEvent(new CustomEvent('updated'));
+			setTimeout((word == this.answer ? this.onComplete : this.onRetry).bind(this), WORD_LENGTH * FLIP_DELAY);
+		}
+		else {
+			if (row.classList.contains('shake'))
+				return;
+			row.classList.add('shake');
+			setTimeout(row.classList.remove.bind(row.classList, 'shake'), SHAKE_DELAY);
+		}
+	}
+
+	load() {
+		var data = window.localStorage.getItem('state');
+		var state = data ? JSON.parse(data) : null;
+		var now = new Date();
+		this.day = Math.floor(now / (1000 * 3600 * 24));
+		if (state && state.day == this.day) {
+			this.answer = state.answer;
+			this.guesses = state.guesses;
+			this.solved = state.solved;
+			this.finished = state.solved || state.guesses.length >= GUESS_LIMIT;
+			for (var i = 0; i < this.guesses.length; i++) {
+				var word = this.guesses[i];
+				this.updateRow(i, word, this.checkWord(word), true)
+			}
+			this.active = !this.finished;
+		}
+		else {
+			this.answer = getAnswer(this.day);
+			this.guesses = [];
+			this.solved = false;
+			this.finished = false;
+			this.active = true;
+		}
+		this.updateDay();
+	}
+
+	reset() {
+		this.answer = getAnswer(this.day);
+		this.guesses = [];
+		this.solved = false;
+		this.finished = false;
+		this.active = true;
+		this.save();
+	}
+
+	save() {
+		window.localStorage.setItem('state', JSON.stringify({
+			answer: this.answer,
+			guesses: this.guesses,
+			solved: this.solved,
+			day: this.day
+		}));
+	}
+
+}

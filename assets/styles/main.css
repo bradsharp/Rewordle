@@ -45,7 +45,7 @@ header .title {
 
 header .left, header .right {
 	line-height: var(--header-height);
-	font-size: 24px;
+	font-size: 20px;
 	flex: none;	
 }
 
@@ -71,8 +71,25 @@ main > * {
 	width: 100%;
 }
 
+.preload * {
+	transition: none !important;
+}
+
 .hidden {
 	display: none !important;
+}
+
+.toast {
+	background: var(--dark-grey);
+	color: var(--white);
+	border-radius: 6px;
+	box-shadow: 0 3px 6px var(--shadow);
+	font-weight: 600;
+}
+
+.toast.large {
+	font-weight: 700;
+	font-size: 20px;
 }
 
 .pane {
@@ -141,6 +158,7 @@ main > * {
 	line-height: 40px;
 	font-weight: 700;
 	text-align: center;
+	text-transform: uppercase;
 }
 
 .stats {

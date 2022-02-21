@@ -3,6 +3,7 @@
 <html>
 	<head>
 		<title>Rewordle</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="assets/styles/reset.css">
 		<link rel="stylesheet" href="assets/styles/light.css">
@@ -11,7 +12,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 		<meta name="application-name" content="Rewordle">
 	</head>
-	<body>
+	<body class="preload">
 		<header>
 			<div class="left">
 				<a class="button" href="https://github.com/BradSharp"><i class="fa fa-github"></i></a>
@@ -70,6 +71,7 @@
 						<div class="tile"><div class="front"></div><div class="back"></div></div>
 						<div class="tile"><div class="front"></div><div class="back"></div></div>
 					</div>
+					<div id="day"></div>
 				</div>
 				<div id="keyboard">
 					<div class="row top">
@@ -148,51 +150,51 @@
 				<a class="button" href="#">Close</a>
 			</div>
 			<div id="results" class="pane hidden">
-				<section id="game-outcome" class="">
+				<section id="game-outcome" class="hidden">
 					<h1>Results</h1>
-					<div class="example">
-						<div class="tile" state="correct">B</div>
-						<div class="tile" state="correct">O</div>
-						<div class="tile" state="correct">O</div>
-						<div class="tile" state="correct">S</div>
-						<div class="tile" state="correct">T</div>
+					<div id="solution" class="example">
+						<div class="tile">B</div>
+						<div class="tile">O</div>
+						<div class="tile">O</div>
+						<div class="tile">S</div>
+						<div class="tile">T</div>
 					</div>
-					<p>You guessed it in 5 turns!</p>
+					<p id="guesses">You guessed it in 5 turns!</p>
 					<a id="share" class="button" href="#results">Share <i class="fa fa-share"></i></a>
 				</section>
-				<section>
+				<section id="game-stats" class="hidden">
 					<h1>Statistics</h1>
 					<div class="stats">
 						<div class="label">Played</div>
-						<div class="value">0</div>
+						<div class="value" stat="played">0</div>
 						<div class="label">Win Percentage</div>
-						<div class="value">0</div>
+						<div class="value" stat="winPercentage">0</div>
 						<div class="label">Streak</div>
-						<div class="value">0</div>
+						<div class="value" stat="streak">0</div>
 						<div class="label">Best Streak</div>
-						<div class="value">0</div>
+						<div class="value" stat="bestStreak">0</div>
 					</div>
 				</section>
-				<section>
-					<h1>Distribution</h1>
+				<section id="game-heatmap" class="hidden">
+					<h1>Guess Distribution</h1>
 					<div class="heatmap">
 						<div class="label">1</div>
-						<div class="bar"></div>
+						<div class="bar" index=1></div>
 						<div class="label">2</div>
-						<div class="bar"></div>
+						<div class="bar" index=2></div>
 						<div class="label">3</div>
-						<div class="bar"></div>
+						<div class="bar" index=3></div>
 						<div class="label">4</div>
-						<div class="bar"></div>
+						<div class="bar" index=4></div>
 						<div class="label">5</div>
-						<div class="bar"></div>
+						<div class="bar" index=5></div>
 						<div class="label">6</div>
-						<div class="bar"></div>
+						<div class="bar" index=6></div>
 					</div>
 				</section>
 				<section>
 					<h1>Next Word</h1>
-					<p>TIMER</p>
+					<p id="timer">00:00:00</p>
 				</section>
 				<a class="button" href="#">Close</a>
 			</div>
@@ -200,10 +202,12 @@
 		<footer>
 
 		</footer>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js"></script>
-		<script type="text/javascript" src="assets/scripts/nav.js"></script>
 		<script type="text/javascript" src="assets/scripts/words.js"></script>
 		<script type="text/javascript" src="assets/scripts/answers.js"></script>
 		<script type="text/javascript" src="assets/scripts/wordle.js"></script>
+		<script type="text/javascript" src="assets/scripts/keyboard.js"></script>
+		<script type="text/javascript" src="assets/scripts/main.js"></script>
 	</body>
 </html>

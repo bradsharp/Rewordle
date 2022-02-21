@@ -40,7 +40,7 @@ input[type=button] {
 .tile[state=wrong] {
 	--background-color: var(--red);
 	--border-color: var(--red);
-	color: var(--white);
+	--color: var(--white);
 }
 
 #game {
@@ -99,6 +99,13 @@ input[type=button] {
 
 #board .tile[flipped=true] {
 	transform: rotateY(-180deg);
+}
+
+#day {
+	margin-top: 12px;
+	color: var(--light-grey);
+	font-size: 18px;
+	text-align: center;
 }
 
 #keyboard {
