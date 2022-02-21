@@ -1,6 +1,13 @@
 function main() {
 
 	function setupGame() {
+
+		const StatExpressions = {
+			played: stats => stats.gamesPlayed,
+			winRate: stats => `${Math.round(100 * stats.gamesWon / stats.gamesPlayed)}%`,
+			streak: stats => stats.currentStreak,
+			bestStreak: stats => stats.bestStreak,
+		}
 	
 		var results = document.getElementById('results');
 		var share = results.querySelector('#share');
@@ -33,7 +40,7 @@ function main() {
 
 		function updateGameOutcome() {
 			var outcome = results.querySelector('#game-outcome');
-			if (game.finished) {
+			if (game.isFinished()) {
 				var solution = outcome.querySelector('#solution');
 				var guesses = outcome.querySelector('#guesses');
 				for (var i = 0; i < WORD_LENGTH; i++) {
@@ -58,13 +65,11 @@ function main() {
 		}
 
 		function updateGameStats() {
-			var data = window.localStorage.getItem('stats');
-			var stats = data ? JSON.parse(data) : null;
-			if (!stats)
-				return;
-			results.querySelectorAll(`.value[stat]`).forEach(field => {
-				var stat = field.getAttribute('stat');
-				field.textContent = stats.values[stat];
+			var stats = Wordle.fetchStats();
+			results.querySelectorAll(`.value[stat]`).forEach(element => {
+				var stat = element.getAttribute('stat');
+				if (stat in StatExpressions)
+					element.textContent = StatExpressions[stat](stats);
 			})
 			// results.querySelectorAll(`.bar[index]`).forEach(field => {
 			// 	var stat = field.getAttribute('index');

@@ -24,6 +24,18 @@ function isLetter(str) {
 }
 
 class Wordle {
+	
+	static fetchStats() {
+		var data = window.localStorage.getItem('stats');
+		return data ? JSON.parse(data) : {
+			lastDay: 0,
+			gamesPlayed: 0,
+			gamesWon: 0,
+			currentStreak: 0,
+			bestStreak: 0,
+			guessDistribution: (new Array(GUESS_LIMIT)).fill(0),
+		};
+	}
 
 	constructor(boardElement, keyboardElement) {
 		this.board = boardElement;
@@ -115,7 +127,6 @@ class Wordle {
 	}
 
 	onComplete() {
-		this.finished = true;
 		this.board.dispatchEvent(new CustomEvent('finished'));
 	}
 
@@ -151,6 +162,10 @@ class Wordle {
 		}
 	}
 
+	isFinished() {
+		return this.solved || this.guesses.length >= GUESS_LIMIT;
+	}
+
 	load() {
 		var data = window.localStorage.getItem('state');
 		var state = data ? JSON.parse(data) : null;
@@ -160,19 +175,17 @@ class Wordle {
 			this.answer = state.answer;
 			this.guesses = state.guesses;
 			this.solved = state.solved;
-			this.finished = state.solved || state.guesses.length >= GUESS_LIMIT;
 			for (var i = 0; i < this.guesses.length; i++) {
 				var word = this.guesses[i];
 				this.updateRow(i, word, this.checkWord(word), true)
 			}
-			this.active = !this.finished;
+			this.active = !this.isFinished();
 			this.updateKeyboard();
 		}
 		else {
 			this.answer = getAnswer(this.day);
 			this.guesses = [];
 			this.solved = false;
-			this.finished = false;
 			this.active = true;
 		}
 		this.updateDay();
@@ -182,12 +195,32 @@ class Wordle {
 		this.answer = getAnswer(this.day);
 		this.guesses = [];
 		this.solved = false;
-		this.finished = false;
 		this.active = true;
 		this.save();
 	}
 
+	updateStats() {
+		if (!this.isFinished())
+			return;
+		var stats = Wordle.fetchStats();
+		if (stats.lastDay >= this.day)
+			return;
+		stats.gamesPlayed++;
+		if (this.solved) {
+			stats.gamesWon++;
+			stats.currentStreak++;
+			stats.bestStreak = Math.max(stats.currentStreak, stats.bestStreak);
+		}
+		else {
+			stats.currentStreak = 0;
+		}
+		stats.guessDistribution[this.guesses.length - 1]++;
+		stats.lastDay = this.day;
+		window.localStorage.setItem('stats', JSON.stringify(stats));
+	}
+
 	save() {
+		this.updateStats();
 		window.localStorage.setItem('state', JSON.stringify({
 			answer: this.answer,
 			guesses: this.guesses,
