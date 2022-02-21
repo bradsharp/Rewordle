@@ -118,6 +118,8 @@ function main() {
 					}
 				}).join('') : '⬜⬜⬜⬜⬜')
 			}
+			lines.push('');
+			lines.push('https://rewordle.app/');
 			navigator.clipboard.writeText(lines.join('\n'));
 			clipboardToast.showToast();
 		})
