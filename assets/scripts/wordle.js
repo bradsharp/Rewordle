@@ -20,7 +20,7 @@ const DisplayPriority = {
 	[TileState.Correct]: 4,
 }
 
-const WordleStorage = new Storage('wordle', window.sessionStorage);
+const WordleStorage = new Storage('wordle', window.localStorage);
 
 class Wordle {
 
