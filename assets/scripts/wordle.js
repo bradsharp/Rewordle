@@ -102,6 +102,14 @@ class Wordle {
 		}
 	}
 
+	shakeCurrentGuess(index, shake=true) {
+		let row = board.children[this.guesses.length]
+		if (row.classList.contains('shake'))
+			return;
+		row.classList.add('shake');
+		setTimeout(row.classList.remove.bind(row.classList, 'shake'), SHAKE_DELAY);
+	}
+
 	updateCurrentGuess(word) {
 		if (!this.active)
 			return;
@@ -142,10 +150,7 @@ class Wordle {
 			setTimeout((word == this.answer ? this.onComplete : this.onRetry).bind(this), WORD_LENGTH * FLIP_DELAY);
 		}
 		else {
-			if (row.classList.contains('shake'))
-				return;
-			row.classList.add('shake');
-			setTimeout(row.classList.remove.bind(row.classList, 'shake'), SHAKE_DELAY);
+			this.shakeCurrentGuess();
 		}
 	}
 
