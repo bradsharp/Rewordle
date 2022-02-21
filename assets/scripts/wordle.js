@@ -36,7 +36,7 @@ class Wordle {
 			gamesWon: 0,
 			currentStreak: 0,
 			bestStreak: 0,
-			guessDistribution: (new Array(GUESS_LIMIT)).fill(0),
+			guessDistribution: [0, 0, 0, 0, 0, 0],
 		};
 	}
 
