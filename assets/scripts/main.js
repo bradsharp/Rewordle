@@ -3,19 +3,25 @@ function main() {
 	function setupGame() {
 
 		const StatExpressions = {
-			played: stats => stats.gamesPlayed,
-			winRate: stats => `${Math.round(100 * stats.gamesWon / stats.gamesPlayed)}%`,
-			streak: stats => stats.currentStreak,
-			bestStreak: stats => stats.bestStreak,
+			played: () => WordleStorage.get('totalGames', 0),
+			winRate: () => {
+				let gamesPlayed = WordleStorage.get('totalGames', 0);
+				let gamesWon = WordleStorage.get('totalWins', 0);
+				if (gamesPlayed == 0)
+					return `0%`;
+				return `${Math.floor(100 * gamesWon / gamesPlayed)}%`
+			},
+			streak: () => WordleStorage.get('currentWinStreak', 0),
+			bestStreak: () => WordleStorage.get('bestWinStreak', 0),
 		}
 	
-		var results = document.getElementById('results');
-		var share = results.querySelector('#share');
-		var board = document.getElementById('board');
-		var keyboard = document.getElementById('keyboard');
-		var game = new Wordle(board, keyboard);
+		let results = document.getElementById('results');
+		let share = results.querySelector('#share');
+		let board = document.getElementById('board');
+		let keyboard = document.getElementById('keyboard');
+		let game = new Wordle(board, keyboard);
 
-		var clipboardToast = Toastify({
+		let clipboardToast = Toastify({
 			text: "Copied to Clipboard",
 			className: 'toast',
 			duration: 3000,
@@ -25,7 +31,7 @@ function main() {
 			stopOnFocus: true,
 		});
 
-		var solvedToast = Toastify({
+		let solvedToast = Toastify({
 			text: "Magnificent!",
 			className: 'toast large',
 			duration: 3000,
@@ -39,16 +45,16 @@ function main() {
 		});
 
 		function updateGameOutcome() {
-			var outcome = results.querySelector('#game-outcome');
+			let outcome = results.querySelector('#game-outcome');
 			if (game.isFinished()) {
-				var solution = outcome.querySelector('#solution');
-				var guesses = outcome.querySelector('#guesses');
-				for (var i = 0; i < WORD_LENGTH; i++) {
-					var tile = solution.children[i];
+				let solution = outcome.querySelector('#solution');
+				let guesses = outcome.querySelector('#guesses');
+				for (let i = 0; i < WORD_LENGTH; i++) {
+					let tile = solution.children[i];
 					tile.textContent = game.answer.charAt(i);
 					tile.setAttribute('state', game.solved ? TileState.Correct : TileState.Wrong);
 				}
-				var guessCount = game.guesses.length;
+				let guessCount = game.guesses.length;
 				if (game.solved)
 					guesses.textContent = `You guessed it in ${guessCount} ${guessCount > 1 ? "turns" : "turn"}!`;
 				else
@@ -60,33 +66,29 @@ function main() {
 			}
 		}
 
-		function updateDistribution() {
-
-		}
-
 		function updateGameStats() {
-			var stats = Wordle.fetchStats();
 			results.querySelectorAll(`.value[stat]`).forEach(element => {
-				var stat = element.getAttribute('stat');
+				let stat = element.getAttribute('stat');
 				if (stat in StatExpressions)
-					element.textContent = StatExpressions[stat](stats);
+					element.textContent = StatExpressions[stat]();
 			})
-			var max = Math.max(...stats.guessDistribution);
-			var heatmap = results.querySelector('#game-heatmap .heatmap');
-			for (var i = 0; i < 6; i++) {
-				var entry = heatmap.children[i];
-				var bar = entry.querySelector('.bar');
-				var value = stats.guessDistribution[i] ?? 0;
+			let guessDistribution = WordleStorage.get('guessDistribution', [0, 0, 0, 0, 0, 0]);
+			let max = Math.max(...guessDistribution);
+			let heatmap = results.querySelector('#game-heatmap .heatmap');
+			for (let i = 0; i < 6; i++) {
+				let entry = heatmap.children[i];
+				let bar = entry.querySelector('.bar');
+				let value = guessDistribution[i] ?? 0;
 				bar.style.width = `${100 * value / max}%`
 			}
 		}
 
 		function updateTimer() {
-			var timer = results.querySelector('#timer');
-			var date = new Date();
-			var hours = date.getHours();
-			var minutes = date.getMinutes();
-			var seconds = date.getSeconds();
+			let timer = results.querySelector('#timer');
+			let date = new Date();
+			let hours = date.getHours();
+			let minutes = date.getMinutes();
+			let seconds = date.getSeconds();
 			timer.textContent = `${23 - hours}:${59 - minutes}:${59 - seconds}` // TODO: 0-Padding
 		}
 
@@ -95,7 +97,6 @@ function main() {
 				solvedToast.showToast();
 			updateGameOutcome();
 			updateGameStats();
-			updateDistribution();
 			window.location.hash = '#results';
 		});
 
@@ -104,11 +105,11 @@ function main() {
 		});
 
 		share.addEventListener('click', () => {
-			var lines = [];
+			let lines = [];
 			lines.push(`Rewordle #${game.day} ${game.guesses.length}/6`);
 			lines.push('');
-			for (var i = 0; i < game.guesses.length; i++) {
-				var result = game.checkWord(game.guesses[i]);
+			for (let i = 0; i < game.guesses.length; i++) {
+				let result = game.checkWord(game.guesses[i]);
 				lines.push(result ? result.map(state => {
 					switch (state) {
 						case TileState.Correct: return '🟩';
@@ -120,6 +121,10 @@ function main() {
 			navigator.clipboard.writeText(lines.join('\n'));
 			clipboardToast.showToast();
 		})
+
+		function isLetter(str) {
+			return str.length === 1 && str.match(/[a-z]/i);
+		}
 
 		document.addEventListener('keydown', input => {
 			if (input.key == "Enter")
@@ -135,7 +140,6 @@ function main() {
 
 		updateGameStats();
 		updateGameOutcome();
-		updateDistribution();
 
 		setInterval(updateTimer, 1000);
 
@@ -146,7 +150,7 @@ function main() {
 		function updateLocation() {
 			document.querySelectorAll('.pane').forEach(element => element.classList.add('hidden'));
 			if (window.location.hash.length > 0) {
-				var selected = document.querySelector(window.location.hash);
+				let selected = document.querySelector(window.location.hash);
 				if (selected)
 					selected.classList.remove('hidden');
 			}

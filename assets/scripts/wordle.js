@@ -1,10 +1,8 @@
-const STATE_KEY = 'wordle-5-state';
-const STATS_KEY = 'wordle-5-stats';
+const GUESS_LIMIT = 6;
+const WORD_LENGTH = 5;
 
 const FLIP_DELAY = 500;
 const SHAKE_DELAY = 800;
-const GUESS_LIMIT = 6;
-const WORD_LENGTH = 5;
 
 const TileState = {
 	None: 'none', // No state
@@ -22,23 +20,9 @@ const DisplayPriority = {
 	[TileState.Correct]: 4,
 }
 
-function isLetter(str) {
-	return str.length === 1 && str.match(/[a-z]/i);
-}
+const WordleStorage = new Storage('wordle', window.sessionStorage);
 
 class Wordle {
-	
-	static fetchStats() {
-		var data = window.localStorage.getItem(STATE_KEY);
-		return data ? JSON.parse(data) : {
-			lastDay: 0,
-			gamesPlayed: 0,
-			gamesWon: 0,
-			currentStreak: 0,
-			bestStreak: 0,
-			guessDistribution: [0, 0, 0, 0, 0, 0],
-		};
-	}
 
 	constructor(boardElement, keyboardElement) {
 		this.board = boardElement;
@@ -60,16 +44,16 @@ class Wordle {
 			return null;
 		if (!words.includes(word))
 			return null;
-		var state = (new Array(WORD_LENGTH)).fill(TileState.Invalid);
-		for (var i = 0; i < WORD_LENGTH; i++) {
+		let state = (new Array(WORD_LENGTH)).fill(TileState.Invalid);
+		for (let i = 0; i < WORD_LENGTH; i++) {
 			if (word.charAt(i) == this.answer.charAt(i))
 				state[i] = TileState.Correct;
 		}
-		for (var i = 0; i < WORD_LENGTH; i++) {
+		for (let i = 0; i < WORD_LENGTH; i++) {
 			if (state[i] == TileState.Correct)
 				continue;
-			var answerChar = this.answer.charAt(i);
-			for (var j = 0; j < WORD_LENGTH; j++) {
+			let answerChar = this.answer.charAt(i);
+			for (let j = 0; j < WORD_LENGTH; j++) {
 				if (state[j] != TileState.Invalid)
 					continue;
 				if (word.charAt(j) == answerChar) {
@@ -82,15 +66,15 @@ class Wordle {
 	}
 
 	updateKeyboard() {
-		var characterState = {};
+		let characterState = {};
 		this.keyboard.querySelectorAll('.letter').forEach(button => characterState[button.value] = TileState.None);
-		for (var i = 0; i < this.guesses.length; i++) {
-			var word = this.guesses[i];
-			var wordState = this.checkWord(word);
+		for (let i = 0; i < this.guesses.length; i++) {
+			let word = this.guesses[i];
+			let wordState = this.checkWord(word);
 			if (wordState == null)
 				continue;
-			for (var j = 0; j < WORD_LENGTH; j++) {
-				var char = word.charAt(j);
+			for (let j = 0; j < WORD_LENGTH; j++) {
+				let char = word.charAt(j);
 				if (DisplayPriority[wordState[j]] > DisplayPriority[characterState[char]])
 					characterState[char] = wordState[j];
 			}
@@ -104,16 +88,16 @@ class Wordle {
 	}
 
 	updateRow(index, word, result=null, instant=false) {
-		var row = board.children[index];
-		for (var i = 0; i < 5; i++) {
-			var tile = row.children[i];
-			var char = word.charAt(i);
+		let row = board.children[index];
+		for (let i = 0; i < 5; i++) {
+			let tile = row.children[i];
+			let char = word.charAt(i);
 			tile.querySelector('.front').textContent = char
 			tile.querySelector('.back').textContent = char
 		}
 		if (result) {
-			var delay = instant ? 0 : FLIP_DELAY;
-			for (var i = 0; i < WORD_LENGTH; i++)
+			let delay = instant ? 0 : FLIP_DELAY;
+			for (let i = 0; i < WORD_LENGTH; i++)
 				setTimeout(this.updateTile.bind(this, row.children[i], result[i]), i * delay);
 		}
 	}
@@ -146,7 +130,7 @@ class Wordle {
 			return;
 		if (this.guesses.length >= GUESS_LIMIT)
 			return;
-		var result = this.checkWord(word);
+		let result = this.checkWord(word);
 		if (result) {
 			this.active = false;
 			this.guesses.push(word);
@@ -170,16 +154,14 @@ class Wordle {
 	}
 
 	load() {
-		var data = window.localStorage.getItem(STATE_KEY);
-		var state = data ? JSON.parse(data) : null;
-		var now = new Date();
+		let now = new Date();
 		this.day = Math.floor(now / (1000 * 3600 * 24));
-		if (state && state.day == this.day) {
-			this.answer = state.answer;
-			this.guesses = state.guesses;
-			this.solved = state.solved;
-			for (var i = 0; i < this.guesses.length; i++) {
-				var word = this.guesses[i];
+		if (this.day == WordleStorage.get('day')) {
+			this.answer = WordleStorage.get('answer', getAnswer(this.day));
+			this.guesses = WordleStorage.get('guesses', []);
+			this.solved = WordleStorage.get('solved', false);
+			for (let i = 0; i < this.guesses.length; i++) {
+				let word = this.guesses[i];
 				this.updateRow(i, word, this.checkWord(word), true)
 			}
 			this.active = !this.isFinished();
@@ -194,42 +176,35 @@ class Wordle {
 		this.updateDay();
 	}
 
+	save() {
+		WordleStorage.set('answer', this.answer);
+		WordleStorage.set('guesses', this.guesses);
+		WordleStorage.set('solved', this.solved);
+		WordleStorage.set('day', this.day);
+		if (!this.isFinished())
+			return;
+		if (this.day >= WordleStorage.get('statsLastUpdated', 0))
+			return;
+		WordleStorage.set('statsLastUpdated', this.day);
+		WordleStorage.set('totalGames', WordleStorage.get('totalGames', 0) + 1);
+		if (this.solved) {
+			let currentWinStreak = WordleStorage.get('currentWinStreak', 0) + 1;
+			let bestWinStreak = WordleStorage.get('bestWinStreak', 0);
+			WordleStorage.set('totalWins', WordleStorage.get('totalWins', 0) + 1);
+			WordleStorage.set('currentWinStreak', currentWinStreak);
+			WordleStorage.set('bestWinStreak', Math.max(currentWinStreak, bestWinStreak));
+		}
+		let guessDistribution = WordleStorage.get('guessDistribution', [0, 0, 0, 0, 0, 0]);
+		guessDistribution[this.guesses.length - 1]++;
+		WordleStorage.set('guessDistribution', guessDistribution);
+	}
+
 	reset() {
 		this.answer = getAnswer(this.day);
 		this.guesses = [];
 		this.solved = false;
 		this.active = true;
 		this.save();
-	}
-
-	updateStats() {
-		if (!this.isFinished())
-			return;
-		var stats = Wordle.fetchStats();
-		if (stats.lastDay >= this.day)
-			return;
-		stats.gamesPlayed++;
-		if (this.solved) {
-			stats.gamesWon++;
-			stats.currentStreak++;
-			stats.bestStreak = Math.max(stats.currentStreak, stats.bestStreak);
-		}
-		else {
-			stats.currentStreak = 0;
-		}
-		stats.guessDistribution[this.guesses.length - 1]++;
-		stats.lastDay = this.day;
-		window.localStorage.setItem(STATS_KEY, JSON.stringify(stats));
-	}
-
-	save() {
-		this.updateStats();
-		window.localStorage.setItem(STATE_KEY, JSON.stringify({
-			answer: this.answer,
-			guesses: this.guesses,
-			solved: this.solved,
-			day: this.day
-		}));
 	}
 
 }
