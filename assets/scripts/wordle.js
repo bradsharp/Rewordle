@@ -166,6 +166,7 @@ class Wordle {
 				this.updateRow(i, word, this.checkWord(word), true)
 			}
 			this.active = !this.finished;
+			this.updateKeyboard();
 		}
 		else {
 			this.answer = getAnswer(this.day);

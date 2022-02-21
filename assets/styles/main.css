@@ -3,6 +3,43 @@
 
 :root {
 	--header-height: 48px;
+	--green: #6AAA64;
+	--yellow: #FFBF46;
+	--red: #B61F1F;
+	--black: #020202;
+	--light-grey: #E0E0E1;
+	--grey: #A7A7A8;
+	--dark-grey: #474748;
+	--white: #FEFEFE;
+	--shadow: rgba(72, 72, 72, 0.2);
+}
+
+.light {
+	--background-color: var(--white);
+	--border-color: var(--light-grey);
+	--text-color: var(--black);
+	--icon-color: var(--light-grey);
+	--icon-hover-color: var(--black);
+	--subtle-text-color: var(--light-grey);
+	--button-background-color: var(--light-grey);
+	--button-text-color: var(--dark-grey);
+	--toast-background-color: var(--dark-grey);
+	--toast-text-color: var(--white);
+	--pane-background-color: var(--white);
+}
+
+.dark {
+	--background-color: var(--black);
+	--border-color: var(--dark-grey);
+	--text-color: var(--white);
+	--icon-color: var(--dark-grey);
+	--icon-hover-color: var(--black);
+	--subtle-text-color: var(--dark-grey);
+	--button-background-color: var(--dark-grey);
+	--button-text-color: var(--light-grey);
+	--toast-background-color: var(--light-grey);
+	--toast-text-color: var(--black);
+	--pane-background-color: var(--black);
 }
 
 html, body {
@@ -15,8 +52,8 @@ div {
 }
 
 body {
-	background-color: var(--white);
-	color: var(--black);
+	background-color: var(--background-color);
+	color: var(--text-color);
 	font-family: 'Nunito', sans-serif;
 }
 
@@ -24,7 +61,7 @@ header {
 	padding: 0 12px;
 	height: 48px;
 	display: flex;
-	background-color: var(--white);
+	background-color: var(--background-color);
 	z-index: 3;
 	position: relative;
 }
@@ -40,7 +77,7 @@ header .title {
 	font-size: 24px;
 	font-weight: 600;
 	text-transform: uppercase;
-	color: var(--black);
+	color: var(--text-color);
 }
 
 header .left, header .right {
@@ -52,12 +89,12 @@ header .left, header .right {
 header .button {
 	display: inline-block;
 	margin: 0 3px;
-	color: var(--light-grey);
+	color: var(--icon-color);
 	cursor:pointer;
 }
 
 header .button:hover {
-	color: var(--black);
+	color: var(--icon-hover-color);
 }
 
 main {
@@ -80,8 +117,8 @@ main > * {
 }
 
 .toast {
-	background: var(--dark-grey);
-	color: var(--white);
+	background: var(--toast-background-color);
+	color: var(--toast-text-color);
 	border-radius: 6px;
 	box-shadow: 0 3px 6px var(--shadow);
 	font-weight: 600;
@@ -99,7 +136,7 @@ main > * {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	background-color: var(--white);
+	background-color: var(--pane-background-color);
 	overflow-y: scroll;
 	z-index: 2;
 }
@@ -126,9 +163,9 @@ main > * {
 .pane .button {
 	width: 100px;
 	height: 40px;
-	color: var(--white);
+	color: var(--toast-text-color);
 	display: inline-block;
-	background-color: var(--dark-grey);
+	background-color: var(--toast-background-color);
 	border-radius: 6px;
 	text-decoration: none;
 	text-align: center;
@@ -137,6 +174,7 @@ main > * {
 }
 
 .pane #share.button {
+	color: var(--white);
 	background-color: var(--green);
 }
 
@@ -149,10 +187,10 @@ main > * {
 }
 
 .example .tile {
-	color: var(--color);
-	border: var(--border-color) solid 1px;
+	color: var(--tile-text-color);
+	border: var(--tile-border-color) solid 1px;
 	border-radius: 2px;
-	background-color: var(--background-color);
+	background-color: var(--tile-background-color);
 	width: 40px;
 	height: 40px;
 	line-height: 40px;
@@ -188,7 +226,7 @@ main > * {
 
 .heatmap .bar {
 	border-radius: 6px;
-	background-color: var(--light-grey);
+	background-color: var(--border-color);
 	box-sizing: border-box;
 	height: 100%;
 }

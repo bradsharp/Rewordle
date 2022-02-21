@@ -6,41 +6,34 @@
 	--keyboard-width: 480px;
 }
 
-input[type=button] {
-	border-radius: 4px;
-	border-width: 0;
-	font: inherit;
-	color: inherit;
-}
-
 .tile {
-	--background-color: var(--white);
-	--border-color: var(--light-grey);
-	--color: var(--black);
+	--tile-background-color: var(--white);
+	--tile-border-color: var(--light-grey);
+	--tile-text-color: var(--black);
 }
 
 .tile[state=correct] {
-	--background-color: var(--green);
-	--border-color: var(--green);
-	--color: var(--white);
+	--tile-background-color: var(--green);
+	--tile-border-color: var(--green);
+	--tile-text-color: var(--white);
 }
 
 .tile[state=valid] {
-	--background-color: var(--yellow);
-	--border-color: var(--yellow);
-	--color: var(--white);
+	--tile-background-color: var(--yellow);
+	--tile-border-color: var(--yellow);
+	--tile-text-color: var(--white);
 }
 
 .tile[state=invalid] {
-	--background-color: var(--grey);
-	--border-color: var(--grey);
-	--color: var(--white);
+	--tile-background-color: var(--grey);
+	--tile-border-color: var(--grey);
+	--tile-text-color: var(--white);
 }
 
 .tile[state=wrong] {
-	--background-color: var(--red);
-	--border-color: var(--red);
-	--color: var(--white);
+	--tile-background-color: var(--red);
+	--tile-border-color: var(--red);
+	--tile-text-color: var(--white);
 }
 
 #game {
@@ -80,21 +73,24 @@ input[type=button] {
 }
 
 #board .tile .front, #board .tile .back {
-	color: var(--black);
-	border: var(--light-grey) solid 1px;
 	border-radius: 2px;
-	background-color: var(--white);
 	backface-visibility: hidden;
 	position: absolute;
 	height: 100%;
 	width: 100%;
 }
 
-#board .tile .back {
-	transform: rotateY(180deg);
+#board .tile .front {
+	color: var(--text-color);
 	border: var(--border-color) solid 1px;
 	background-color: var(--background-color);
-	color: var(--color);
+}
+
+#board .tile .back {
+	transform: rotateY(180deg);
+	border: var(--tile-border-color) solid 1px;
+	background-color: var(--tile-background-color);
+	color: var(--tile-text-color);
 }
 
 #board .tile[flipped=true] {
@@ -103,7 +99,7 @@ input[type=button] {
 
 #day {
 	margin-top: 12px;
-	color: var(--light-grey);
+	color: var(--subtle-text-color);
 	font-size: 18px;
 	text-align: center;
 }
@@ -137,9 +133,16 @@ input[type=button] {
 	grid-template-columns: 3fr repeat(7, 2fr) 3fr;
 }
 
-#keyboard .letter {
+#keyboard input[type=button] {
 	margin: 3px;
-	background-color: var(--light-grey);
+	border-radius: 4px;
+	border-width: 0;
+	font: inherit;
+	color: var(--button-text-color);
+	background-color: var(--button-background-color);
+}
+
+#keyboard .letter {
 	text-transform: uppercase;
 	transition: background-color 1s, color 1s;
 }
@@ -162,9 +165,4 @@ input[type=button] {
 #keyboard .letter[state=wrong] {
 	background-color: var(--red);
 	color: var(--white);
-}
-
-#keyboard .button {
-	margin: 3px;
-	background-color: var(--light-grey);
 }
