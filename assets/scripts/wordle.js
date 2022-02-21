@@ -183,9 +183,9 @@ class Wordle {
 		WordleStorage.set('day', this.day);
 		if (!this.isFinished())
 			return;
-		if (this.day >= WordleStorage.get('statsLastUpdated', 0))
+		if (this.day <= WordleStorage.get('lastFinished', 0))
 			return;
-		WordleStorage.set('statsLastUpdated', this.day);
+		WordleStorage.set('lastFinished', this.day);
 		WordleStorage.set('totalGames', WordleStorage.get('totalGames', 0) + 1);
 		if (this.solved) {
 			let currentWinStreak = WordleStorage.get('currentWinStreak', 0) + 1;
