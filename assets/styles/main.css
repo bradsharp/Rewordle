@@ -156,7 +156,7 @@ main > * {
 	font-weight: 700;
 }
 
-.pane :last-child {
+.pane section > :last-child {
 	margin-bottom: 24px;
 }
 
@@ -218,10 +218,16 @@ main > * {
 
 .heatmap {
 	display: grid;
-	grid-template-columns: 20px 1fr;
+	grid-template-columns: 12px 1fr;
 	grid-template-rows: repeat(6, 16px);
 	gap: 6px;
 	width: 100%;
+}
+
+.heatmap > div {
+	display: grid;
+	grid-column-end: span 2;
+	grid-template-columns: subgrid;
 }
 
 .heatmap .bar {

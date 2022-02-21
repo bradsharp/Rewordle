@@ -71,10 +71,14 @@ function main() {
 				if (stat in StatExpressions)
 					element.textContent = StatExpressions[stat](stats);
 			})
-			// results.querySelectorAll(`.bar[index]`).forEach(field => {
-			// 	var stat = field.getAttribute('index');
-			// 	field.textContent = stats.values[stat];
-			// })
+			var max = Math.max(...stats.guessDistribution);
+			var heatmap = results.querySelector('#game-heatmap .heatmap');
+			for (var i = 0; i < 6; i++) {
+				var entry = heatmap.children[i];
+				var bar = entry.querySelector('.bar');
+				var value = stats.guessDistribution[i] ?? 0;
+				bar.style.width = `${100 * value / max}%`
+			}
 		}
 
 		function updateTimer() {
