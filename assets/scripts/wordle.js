@@ -1,3 +1,6 @@
+const STATE_KEY = 'wordle-5-state';
+const STATS_KEY = 'wordle-5-stats';
+
 const FLIP_DELAY = 500;
 const SHAKE_DELAY = 800;
 const GUESS_LIMIT = 6;
@@ -26,7 +29,7 @@ function isLetter(str) {
 class Wordle {
 	
 	static fetchStats() {
-		var data = window.localStorage.getItem('stats');
+		var data = window.localStorage.getItem(STATE_KEY);
 		return data ? JSON.parse(data) : {
 			lastDay: 0,
 			gamesPlayed: 0,
@@ -167,7 +170,7 @@ class Wordle {
 	}
 
 	load() {
-		var data = window.localStorage.getItem('state');
+		var data = window.localStorage.getItem(STATE_KEY);
 		var state = data ? JSON.parse(data) : null;
 		var now = new Date();
 		this.day = Math.floor(now / (1000 * 3600 * 24));
@@ -216,12 +219,12 @@ class Wordle {
 		}
 		stats.guessDistribution[this.guesses.length - 1]++;
 		stats.lastDay = this.day;
-		window.localStorage.setItem('stats', JSON.stringify(stats));
+		window.localStorage.setItem(STATS_KEY, JSON.stringify(stats));
 	}
 
 	save() {
 		this.updateStats();
-		window.localStorage.setItem('state', JSON.stringify({
+		window.localStorage.setItem(STATE_KEY, JSON.stringify({
 			answer: this.answer,
 			guesses: this.guesses,
 			solved: this.solved,
