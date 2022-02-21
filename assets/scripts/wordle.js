@@ -1,7 +1,7 @@
 const GUESS_LIMIT = 6;
 const WORD_LENGTH = 5;
 
-const FLIP_DELAY = 500;
+const FLIP_DELAY = 400;
 const SHAKE_DELAY = 800;
 
 const TileState = {

@@ -2,6 +2,7 @@
 
 :root {
 	--word-length: 5;
+	--flip-time: 0.8s;
 	--tile-size: 60px;
 	--tile-font-size: 36px;
 	--keyboard-width: 480px;
@@ -92,7 +93,7 @@
 	text-align: center;
 	text-transform: uppercase;
 	transform-style: preserve-3d;
-	transition: transform 1s;
+	transition: transform var(--flip-time);
 }
 
 #board .tile .front, #board .tile .back {
