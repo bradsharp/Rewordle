@@ -68,7 +68,10 @@ class Wordle {
 
 	updateKeyboard() {
 		let characterState = {};
-		this.keyboard.querySelectorAll('.letter').forEach(button => characterState[button.value] = TileState.None);
+		this.keyboard.querySelectorAll('button[key]').forEach(button => {
+			let key = button.getAttribute('key');
+			characterState[key] = TileState.None
+		});
 		for (let i = 0; i < this.guesses.length; i++) {
 			let word = this.guesses[i];
 			let wordState = this.checkWord(word);
@@ -80,7 +83,10 @@ class Wordle {
 					characterState[char] = wordState[j];
 			}
 		}
-		this.keyboard.querySelectorAll('.letter').forEach(button => button.setAttribute('state', characterState[button.value]));
+		this.keyboard.querySelectorAll('button[key]').forEach(button => {
+			let key = button.getAttribute('key');
+			button.setAttribute('state', characterState[key])
+		});
 	}
 
 	updateTile(tile, state) {

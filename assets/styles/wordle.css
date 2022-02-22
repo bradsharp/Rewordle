@@ -170,7 +170,7 @@
 	grid-template-columns: 3fr repeat(7, 2fr) 3fr;
 }
 
-#keyboard input[type=button] {
+#keyboard button {
 	margin: 3px;
 	border-radius: 4px;
 	border-width: 0;
@@ -181,9 +181,9 @@
 	transition: background-color 0.2s, color 0.2s;
 }
 
-#keyboard input[type=button]:hover {
-	background-color: var(--button-text-color);
-	color: var(--button-background-color);
+#keyboard button:hover {
+	background-color: var(--button-text-color) !important;
+	color: var(--button-background-color) !important;
 }
 
 #keyboard .letter {
