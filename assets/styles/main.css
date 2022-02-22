@@ -230,7 +230,7 @@ main > * {
 .heatmap {
 	display: grid;
 	grid-template-columns: 12px 1fr;
-	grid-template-rows: repeat(6, 16px);
+	grid-template-rows: repeat(6, 18px);
 	gap: 6px;
 	width: 100%;
 }
@@ -239,16 +239,18 @@ main > * {
 	display: grid;
 	grid-column-end: span 2;
 	grid-template-columns: subgrid;
+	align-items: center;
 }
 
 .heatmap .bar {
 	border-radius: 6px;
 	background-color: var(--border-color);
 	box-sizing: border-box;
-	height: 100%;
+	min-height: 12px;
+	height: 12px;
 }
 
 .heatmap .label {
 	font-size: 16px;
-	line-height: 100%;
+	line-height: 18px;
 }
