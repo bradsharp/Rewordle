@@ -78,7 +78,7 @@ function main() {
 				let entry = heatmap.children[i];
 				let bar = entry.querySelector('.bar');
 				let value = guessDistribution[i];
-				bar.style.width = `${100 * value / max}%`
+				bar.style.width = `calc(${100 * value / max}% - 24px)`
 			}
 		}
 
