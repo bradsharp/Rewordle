@@ -110,8 +110,8 @@ function main() {
 			lines.push(`Rewordle #${game.getCode()} ${game.guesses.length}/6`);
 			lines.push('');
 			lines.push(game.toString());
-			lines.push('');
-			lines.push('https://rewordle.app/');
+			// lines.push('');
+			// lines.push('https://rewordle.app/');
 			navigator.clipboard.writeText(lines.join('\n'));
 			clipboardToast.showToast();
 		})
