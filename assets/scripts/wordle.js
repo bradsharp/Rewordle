@@ -123,6 +123,7 @@ class Wordle {
 
 	onComplete() {
 		this.board.dispatchEvent(new CustomEvent('finished'));
+		this.updateKeyboard();
 	}
 
 	onRetry() {
@@ -131,6 +132,7 @@ class Wordle {
 			return;
 		}
 		this.active = true;
+		this.updateKeyboard();
 	}
 
 	makeGuess(word) {
@@ -145,7 +147,6 @@ class Wordle {
 			this.currentGuess = '';
 			this.solved = word == this.answer;
 			this.updateRow(this.guesses.length - 1, word, result);
-			this.updateKeyboard();
 			this.board.dispatchEvent(new CustomEvent('updated'));
 			setTimeout((word == this.answer ? this.onComplete : this.onRetry).bind(this), WORD_LENGTH * FLIP_DELAY);
 		}
