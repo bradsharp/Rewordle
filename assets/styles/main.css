@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap');
-@import 'game.css';
 
 :root {
 	--header-height: 48px;
@@ -23,6 +22,7 @@ body[theme=light] {
 	--subtle-text-color: var(--light-grey);
 	--button-background-color: var(--light-grey);
 	--button-text-color: var(--dark-grey);
+	--button-hover-color: var(--grey);
 	--toast-background-color: var(--dark-grey);
 	--toast-text-color: var(--white);
 	--pane-background-color: var(--white);
@@ -33,10 +33,11 @@ body[theme=dark] {
 	--border-color: var(--dark-grey);
 	--text-color: var(--white);
 	--icon-color: var(--dark-grey);
-	--icon-hover-color: var(--black);
+	--icon-hover-color: var(--white);
 	--subtle-text-color: var(--dark-grey);
 	--button-background-color: var(--dark-grey);
 	--button-text-color: var(--light-grey);
+	--button-hover-color: var(--grey);
 	--toast-background-color: var(--light-grey);
 	--toast-text-color: var(--black);
 	--pane-background-color: var(--black);
@@ -49,6 +50,14 @@ html, body {
 
 div {
 	box-sizing: border-box;
+}
+
+a {
+	color: var(--icon-hover-color);
+}
+
+a:hover {
+	color: var(--icon-color);
 }
 
 body {
@@ -90,7 +99,7 @@ header .button {
 	display: inline-block;
 	margin: 0 3px;
 	color: var(--icon-color);
-	cursor:pointer;
+	cursor: pointer;
 }
 
 header .button:hover {

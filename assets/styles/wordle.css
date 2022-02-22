@@ -176,11 +176,16 @@
 	font: inherit;
 	color: var(--button-text-color);
 	background-color: var(--button-background-color);
+	cursor: pointer;
+	transition: background-color 0.2s, color 0.2s;
+}
+
+#keyboard input[type=button]:hover {
+	background-color: var(--button-hover-color);
 }
 
 #keyboard .letter {
 	text-transform: uppercase;
-	transition: background-color 1s, color 1s;
 }
 
 #keyboard .letter[state=correct] {
