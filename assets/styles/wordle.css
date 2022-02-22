@@ -30,9 +30,9 @@
 }
 
 .tile {
-	--tile-background-color: var(--white);
-	--tile-border-color: var(--light-grey);
-	--tile-text-color: var(--black);
+	--tile-background-color: var(--background-color);
+	--tile-border-color: var(--border-color);
+	--tile-text-color: var(--text-color);
 }
 
 .tile[state=correct] {
