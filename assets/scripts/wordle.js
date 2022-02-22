@@ -35,6 +35,7 @@ class Wordle {
 	guesses = [];
 	solved = false;
 	finished = false;
+	valid = false;
 
 	board = null;
 	keyboard = null;
@@ -185,7 +186,11 @@ class Wordle {
 	load() {
 		let params = new URLSearchParams(window.location.search);
 		let now = new Date();
-		this.day = Math.floor(now / (1000 * 3600 * 24));
+		let currentDay = Math.floor(now / (1000 * 3600 * 24));
+		let customDay = parseInt(params.get('day') ?? '', 36);
+		let day = currentDay > customDay ? customDay : currentDay;
+		this.valid = day == currentDay;
+		this.day = day;
 		if (this.day == WordleStorage.get('day')) {
 			this.answer = WordleStorage.get('answer', getAnswer(this.day));
 			this.guesses = WordleStorage.get('guesses', []);
@@ -207,6 +212,8 @@ class Wordle {
 	}
 
 	save() {
+		if (!this.valid)
+			return;
 		WordleStorage.set('answer', this.answer);
 		WordleStorage.set('guesses', this.guesses);
 		WordleStorage.set('solved', this.solved);
