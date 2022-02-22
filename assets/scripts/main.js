@@ -107,7 +107,10 @@ function main() {
 
 		share.addEventListener('click', () => {
 			let lines = [];
-			lines.push(`Rewordle #${game.getCode()} ${game.guesses.length}/6`);
+			if (game.solved)
+				lines.push(`Rewordle #${game.getCode()} ${game.guesses.length}/6`);
+			else
+				lines.push(`Rewordle #${game.getCode()} Failed`);
 			lines.push('');
 			lines.push(game.toString());
 			// lines.push('');
