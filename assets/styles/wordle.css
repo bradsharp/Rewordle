@@ -181,7 +181,8 @@
 }
 
 #keyboard input[type=button]:hover {
-	background-color: var(--button-hover-color);
+	background-color: var(--button-text-color);
+	color: var(--button-background-color);
 }
 
 #keyboard .letter {

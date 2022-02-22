@@ -22,7 +22,6 @@ body[theme=light] {
 	--subtle-text-color: var(--light-grey);
 	--button-background-color: var(--light-grey);
 	--button-text-color: var(--dark-grey);
-	--button-hover-color: var(--grey);
 	--toast-background-color: var(--dark-grey);
 	--toast-text-color: var(--white);
 	--pane-background-color: var(--white);
@@ -37,7 +36,6 @@ body[theme=dark] {
 	--subtle-text-color: var(--dark-grey);
 	--button-background-color: var(--dark-grey);
 	--button-text-color: var(--light-grey);
-	--button-hover-color: var(--grey);
 	--toast-background-color: var(--light-grey);
 	--toast-text-color: var(--black);
 	--pane-background-color: var(--black);
