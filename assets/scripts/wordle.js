@@ -24,9 +24,10 @@ const WordleStorage = new Storage('wordle', window.localStorage);
 
 class Wordle {
 
-	constructor(boardElement, keyboardElement) {
-		this.board = boardElement;
-		this.keyboard = keyboardElement;
+	constructor(gameElement) {
+		this.root = gameElement;
+		this.board = gameElement.querySelector('#board');
+		this.keyboard = gameElement.querySelector('#keyboard');
 	}
 
 	day = 0;
@@ -37,6 +38,7 @@ class Wordle {
 	finished = false;
 	valid = false;
 
+	root = null;
 	board = null;
 	keyboard = null;
 
@@ -125,7 +127,7 @@ class Wordle {
 	}
 
 	updateDay() {
-		this.board.querySelector('#day').textContent = '#' + this.getCode();
+		this.root.querySelector('#day').textContent = '#' + this.getCode();
 	}
 
 	onComplete() {

@@ -17,9 +17,8 @@ function main() {
 	
 		let results = document.getElementById('results');
 		let share = results.querySelector('#share');
-		let board = document.getElementById('board');
-		let keyboard = document.getElementById('keyboard');
-		let game = new Wordle(board, keyboard);
+		let root = document.getElementById('game');
+		let game = new Wordle(root);
 
 		let clipboardToast = Toastify({
 			text: "Copied to Clipboard",
