@@ -107,18 +107,9 @@ function main() {
 
 		share.addEventListener('click', () => {
 			let lines = [];
-			lines.push(`Rewordle #${game.day} ${game.guesses.length}/6`);
+			lines.push(`Rewordle #${game.getCode()} ${game.guesses.length}/6`);
 			lines.push('');
-			for (let i = 0; i < game.guesses.length; i++) {
-				let result = game.checkWord(game.guesses[i]);
-				lines.push(result ? result.map(state => {
-					switch (state) {
-						case TileState.Correct: return '🟩';
-						case TileState.Valid: return '🟨';
-						default: return '⬜';
-					}
-				}).join('') : '⬜⬜⬜⬜⬜')
-			}
+			lines.push(game.toString());
 			lines.push('');
 			lines.push('https://rewordle.app/');
 			navigator.clipboard.writeText(lines.join('\n'));

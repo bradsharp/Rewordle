@@ -118,7 +118,7 @@ class Wordle {
 	}
 
 	updateDay() {
-		this.board.querySelector('#day').textContent = `#${this.day}`;
+		this.board.querySelector('#day').textContent = '#' + this.getCode();
 	}
 
 	onComplete() {
@@ -159,7 +159,31 @@ class Wordle {
 		return this.solved || this.guesses.length >= GUESS_LIMIT;
 	}
 
+	getCode() {
+		return this.day.toString(36).toUpperCase();
+	}
+
+	toString() {
+		let lines = this.guesses.map(word => {
+			let result = this.checkWord(word);
+			if (result)
+				return result.reduce((line, state) => {
+					switch (state) {
+						case TileState.Correct:
+							return line + '🟩';
+						case TileState.Valid:
+							return line + '🟨';
+						default:
+							return line + '⬜';
+					}
+				}, '')
+			return '⬜⬜⬜⬜⬜'
+		})
+		return lines.join('\n');
+	}
+
 	load() {
+		let params = new URLSearchParams(window.location.search);
 		let now = new Date();
 		this.day = Math.floor(now / (1000 * 3600 * 24));
 		if (this.day == WordleStorage.get('day')) {
