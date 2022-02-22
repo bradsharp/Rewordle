@@ -61,6 +61,7 @@ a:hover {
 body {
 	background-color: var(--background-color);
 	color: var(--text-color);
+	font-size: 18px;
 	font-family: 'Nunito', sans-serif;
 }
 
@@ -89,15 +90,25 @@ header .title {
 
 header .left, header .right {
 	line-height: var(--header-height);
-	font-size: 20px;
 	flex: none;	
 }
 
 header .button {
 	display: inline-block;
-	margin: 0 3px;
+	margin: 0 2px;
 	color: var(--icon-color);
 	cursor: pointer;
+	text-align: center;
+	font-size: 18px;
+	width: 24px;
+}
+
+@media screen and (max-width: 400px) {
+	header .button {
+		margin: 0;
+		font-size: 16px;
+		width: 20px;
+	}
 }
 
 header .button:hover {
