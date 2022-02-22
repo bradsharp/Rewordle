@@ -34,10 +34,10 @@ body[theme=dark] {
 	--icon-color: var(--dark-grey);
 	--icon-hover-color: var(--white);
 	--subtle-text-color: var(--dark-grey);
-	--button-background-color: var(--dark-grey);
-	--button-text-color: var(--light-grey);
-	--toast-background-color: var(--light-grey);
-	--toast-text-color: var(--black);
+	--button-background-color: var(--light-grey);
+	--button-text-color: var(--dark-grey);
+	--toast-background-color: var(--dark-grey);
+	--toast-text-color: var(--white);
 	--pane-background-color: var(--black);
 }
 
