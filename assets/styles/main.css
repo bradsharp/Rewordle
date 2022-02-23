@@ -184,10 +184,11 @@ main > * {
 	width: 100%;
 	max-width: 480px;
 	font-size: 16px;
+	margin: 12px 0;
 }
 
 .pane section > * {
-	margin-bottom: 12px;
+	margin: 12px 0;
 }
 
 .pane h1 {
@@ -195,8 +196,18 @@ main > * {
 	font-weight: 700;
 }
 
-.pane section > :last-child {
-	margin-bottom: 24px;
+.pane .stats {
+	display: flex;
+	box-sizing: border-box;
+	flex-wrap: wrap;
+	flex-direction: row;
+	gap: 3px 12px;
+}
+
+.pane .stats > * {
+	flex: 1 1 160px;
+	display: flex;
+	justify-content: space-between;
 }
 
 .pane .button {
@@ -234,13 +245,6 @@ main > * {
 	text-transform: uppercase;
 }
 
-.stats {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	gap: 6px;
-	width: 100%;
-}
-
 .stats .value {
 	font-size: 16px; 
 	text-align: right;
@@ -258,7 +262,6 @@ main > * {
 .heatmap > div {
 	position: relative;
 	height: 24px;
-	margin-bottom: 6px;
 }
 
 .heatmap .bar {
