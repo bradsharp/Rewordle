@@ -192,9 +192,11 @@
 	transition: background-color 0.2s, color 0.2s;
 }
 
-#game #keyboard button:hover {
-	background-color: var(--button-text-color) !important;
-	color: var(--button-background-color) !important;
+@media (hover: hover) {
+	#game #keyboard button:hover {
+		background-color: var(--button-text-color) !important;
+		color: var(--button-background-color) !important;
+	}
 }
 
 #game #keyboard .letter {
