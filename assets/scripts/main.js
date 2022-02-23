@@ -1,5 +1,26 @@
 function main() {
 
+	function setupSettings() {
+
+		const Settings = new Storage('settings', window.localStorage);
+
+		let settingsPane = document.getElementById('settings');
+		let themeCheckbox = settingsPane.querySelector('#theme-switch input[type=checkbox]');
+
+		function updateTheme() {
+			let theme = Settings.get('theme', 'light');
+			document.body.setAttribute('theme', theme);
+		}
+		
+		themeCheckbox.addEventListener('change', () => {
+			Settings.set('theme', themeCheckbox.checked ? 'dark' : 'light');
+			updateTheme();
+		})
+
+		updateTheme();
+
+	}
+
 	function setupGame() {
 
 		const StatExpressions = {
@@ -163,6 +184,7 @@ function main() {
 	}
 
 	setupNavigation();
+	setupSettings();
 	setupGame();
 
 	setTimeout(() => {

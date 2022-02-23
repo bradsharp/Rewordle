@@ -241,8 +241,9 @@ main > * {
 	flex: none;
 }
 
-.pane .stat {
+.pane .entry {
 	display: flex;
+	align-items: center;
 	justify-content: space-between;
 }
 
@@ -254,6 +255,11 @@ main > * {
 .pane .label {
 	font-size: 16px;
 	text-align: left;
+}
+
+.pane .switch {
+	width: 56px;
+	height: 32px;
 }
 
 .pane .button {

@@ -194,21 +194,21 @@
 				<section id="game-stats">
 					<h1>Statistics</h1>
 					<div class="grid">
-						<div class="stat">
-						<div class="label">Played</div>
-						<div class="value" stat="played">0</div>
+						<div class="entry">
+							<div class="label">Played</div>
+							<div class="value" stat="played">0</div>
 						</div>
-						<div class="stat">
+						<div class="entry">
 							<div class="label">Win Rate</div>
-						<div class="value" stat="winRate">0</div>
+							<div class="value" stat="winRate">0</div>
 						</div>
-						<div class="stat">
+						<div class="entry">
 							<div class="label">Current Streak</div>
-						<div class="value" stat="streak">0</div>
+							<div class="value" stat="streak">0</div>
 						</div>
-						<div class="stat">
-						<div class="label">Best Streak</div>
-						<div class="value" stat="bestStreak">0</div>
+						<div class="entry">
+							<div class="label">Best Streak</div>
+							<div class="value" stat="bestStreak">0</div>
 						</div>
 					</div>
 				</section>
@@ -252,8 +252,17 @@
 				<div class="fill"></div>
 				<section>
 					<h1>Settings</h1>
-					<p>Coming Soon.</p>
-					<p>(For now, set body[theme=dark] to enable dark mode.)</p>
+					<div class="list">
+						<div class="entry">
+							<div class="label">Dark Theme</div>
+							<div id="theme-switch" class="switch">
+								<input type="checkbox" class="checkbox">
+								<div class="state">
+									<div class="knob"></div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</section>
 				<a class="button" href="#">Close</a>
 				<div class="fill"></div>
