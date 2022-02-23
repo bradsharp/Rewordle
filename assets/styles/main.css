@@ -211,11 +211,6 @@ main > * {
 	font-weight: 700;
 }
 
-.pane #share.button {
-	color: var(--white);
-	background-color: var(--green);
-}
-
 .example {
 	height: 40px;
 	width: 100%;
