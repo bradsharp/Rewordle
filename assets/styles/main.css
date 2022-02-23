@@ -30,20 +30,20 @@ body[theme=light] {
 }
 
 body[theme=dark] {
-	--background-color: #212121;
-	--border-color: #2E2E2E;
-	--text-color: #A9A9A9;
+	--background-color: #2E2E2E;
+	--border-color: #424242;
+	--text-color: #E8E8E8;
 	--main-text-color: #FEFEFE;
-	--subtle-text-color: #2E2E2E;
-	--icon-color: #A9A9A9;
+	--subtle-text-color: #4E4E4E;
+	--icon-color: #4E4E4E;
 	--icon-hover-color: #FEFEFE;
 	--button-background-color: #121212;
 	--button-text-color: #FEFEFE;
 	--keyboard-background-color: #121212;
-	--keyboard-text-color: #A9A9A9;
+	--keyboard-text-color: #FEFEFE;
 	--toast-background-color: #121212;
 	--toast-text-color: #FEFEFE;
-	--pane-background-color: #212121;
+	--pane-background-color: #2E2E2E;
 }
 
 html, body {
