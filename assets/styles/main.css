@@ -2,15 +2,15 @@
 
 :root {
 	--header-height: 48px;
-	--green: #6AAA64;
-	--yellow: #FFBF46;
-	--red: #B61F1F;
+	--green: #78B159;
+	--yellow: #FDCB58;
+	--red: #DD2E44;
 	--black: #020202;
-	--light-grey: #E0E0E1;
+	--light-grey: #E6E7E8;
 	--grey: #A7A7A8;
-	--dark-grey: #474748;
+	--dark-grey: #31373D;
 	--white: #FEFEFE;
-	--shadow: rgba(72, 72, 72, 0.2);
+	--shadow: rgba(49, 55, 61, 0.2);
 }
 
 body[theme=light] {
@@ -20,8 +20,10 @@ body[theme=light] {
 	--icon-color: var(--light-grey);
 	--icon-hover-color: var(--black);
 	--subtle-text-color: var(--light-grey);
-	--button-background-color: var(--light-grey);
-	--button-text-color: var(--dark-grey);
+	--button-background-color: var(--dark-grey);
+	--button-text-color: var(--white);
+	--keyboard-background-color: var(--light-grey);
+	--keyboard-text-color: var(--dark-grey);
 	--toast-background-color: var(--dark-grey);
 	--toast-text-color: var(--white);
 	--pane-background-color: var(--white);
@@ -34,8 +36,10 @@ body[theme=dark] {
 	--icon-color: var(--dark-grey);
 	--icon-hover-color: var(--white);
 	--subtle-text-color: var(--dark-grey);
-	--button-background-color: var(--light-grey);
-	--button-text-color: var(--dark-grey);
+	--button-background-color: var(--dark-grey);
+	--button-text-color: var(--white);
+	--keyboard-background-color: var(--light-grey);
+	--keyboard-text-color: var(--dark-grey);
 	--toast-background-color: var(--dark-grey);
 	--toast-text-color: var(--white);
 	--pane-background-color: var(--black);
@@ -199,9 +203,9 @@ main > * {
 .pane .button {
 	width: 100px;
 	height: 40px;
-	color: var(--toast-text-color);
+	color: var(--button-text-color);
 	display: inline-block;
-	background-color: var(--toast-background-color);
+	background-color: var(--button-background-color);
 	border-radius: 6px;
 	text-decoration: none;
 	text-align: center;
