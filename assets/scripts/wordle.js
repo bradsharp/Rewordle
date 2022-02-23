@@ -27,7 +27,6 @@ class Wordle {
 	constructor(gameElement) {
 		this.root = gameElement;
 		this.board = gameElement.querySelector('#board');
-		this.keyboard = gameElement.querySelector('#keyboard');
 	}
 
 	day = 0;
@@ -70,7 +69,7 @@ class Wordle {
 
 	updateKeyboard() {
 		let characterState = {};
-		this.keyboard.querySelectorAll('button[key]').forEach(button => {
+		this.root.querySelectorAll('button[key]').forEach(button => {
 			let key = button.getAttribute('key');
 			characterState[key] = TileState.None
 		});
@@ -85,7 +84,7 @@ class Wordle {
 					characterState[char] = wordState[j];
 			}
 		}
-		this.keyboard.querySelectorAll('button[key]').forEach(button => {
+		this.root.querySelectorAll('button[key]').forEach(button => {
 			let key = button.getAttribute('key');
 			button.setAttribute('state', characterState[key])
 		});
