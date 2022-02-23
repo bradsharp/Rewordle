@@ -16,6 +16,7 @@ body[theme=light] {
 	--background-color: #FEFEFE;
 	--border-color: #E8E8E8;
 	--text-color: #2E2E2E;
+	--main-text-color: #151515;
 	--subtle-text-color: #E8E8E8;
 	--icon-color: #E8E8E8;
 	--icon-hover-color: #2E2E2E;
@@ -32,6 +33,7 @@ body[theme=dark] {
 	--background-color: #212121;
 	--border-color: #2E2E2E;
 	--text-color: #A9A9A9;
+	--main-text-color: #FEFEFE;
 	--subtle-text-color: #2E2E2E;
 	--icon-color: #A9A9A9;
 	--icon-hover-color: #FEFEFE;
@@ -90,7 +92,7 @@ header .title {
 	font-size: 24px;
 	font-weight: 600;
 	text-transform: uppercase;
-	color: var(--text-color);
+	color: var(--main-text-color);
 }
 
 header .left, header .right {
