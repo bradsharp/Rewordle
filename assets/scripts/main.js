@@ -10,6 +10,7 @@ function main() {
 		function updateTheme() {
 			let theme = Settings.get('theme', 'light');
 			document.body.setAttribute('theme', theme);
+			themeCheckbox.checked = theme == 'dark';
 		}
 		
 		themeCheckbox.addEventListener('change', () => {
