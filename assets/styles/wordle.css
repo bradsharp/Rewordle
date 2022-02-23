@@ -227,4 +227,5 @@
 	color: var(--keyboard-background-color) !important;
 	background-color: inherit !important;
 	border: 1px solid var(--keyboard-background-color);
+	cursor: default;
 }

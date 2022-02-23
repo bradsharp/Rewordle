@@ -87,6 +87,7 @@ class Wordle {
 		this.root.querySelectorAll('button[key]').forEach(button => {
 			let key = button.getAttribute('key');
 			button.setAttribute('state', characterState[key])
+			button.disabled = characterState[key] == TileState.Invalid;
 		});
 	}
 
