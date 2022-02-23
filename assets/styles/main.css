@@ -131,6 +131,10 @@ main > * {
 	width: 100%;
 }
 
+#game {
+	opacity: 1;
+}
+
 .preload * {
 	transition: none !important;
 }
@@ -158,71 +162,6 @@ main > * {
 	font-size: 20px;
 }
 
-#game {
-	opacity: 1;
-}
-
-.pane {
-	overflow: auto;
-	box-sizing: border-box;
-	padding: 12px;
-	background-color: var(--pane-background-color);
-	z-index: 2;
-	opacity: 1;
-	transition: opacity 0.2s;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-
-.pane .fill {
-	flex: 1 1 auto;
-}
-
-.pane section {
-	flex: none;
-	width: 100%;
-	max-width: 480px;
-	font-size: 16px;
-	margin: 12px 0;
-}
-
-.pane section > * {
-	margin: 12px 0;
-}
-
-.pane h1 {
-	font-size: 24px;
-	font-weight: 700;
-}
-
-.pane .stats {
-	display: flex;
-	box-sizing: border-box;
-	flex-wrap: wrap;
-	flex-direction: row;
-	gap: 3px 12px;
-}
-
-.pane .stats > * {
-	flex: 1 1 160px;
-	display: flex;
-	justify-content: space-between;
-}
-
-.pane .button {
-	width: 100px;
-	height: 40px;
-	color: var(--button-text-color);
-	display: inline-block;
-	background-color: var(--button-background-color);
-	border-radius: 6px;
-	text-decoration: none;
-	text-align: center;
-	line-height: 40px;
-	font-weight: 700;
-}
-
 .example {
 	height: 40px;
 	width: 100%;
@@ -245,14 +184,89 @@ main > * {
 	text-transform: uppercase;
 }
 
-.stats .value {
-	font-size: 16px; 
-	text-align: right;
-	margin-bottom: 6px;
+.pane {
+	overflow: auto;
+	box-sizing: border-box;
+	padding: 12px;
+	background-color: var(--pane-background-color);
+	z-index: 2;
+	opacity: 1;
+	transition: opacity 0.2s;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 24px 0;
 }
 
-.stats .label {
+.pane .fill {
+	flex: 1 1 auto;
+}
+
+.pane section {
+	flex: none;
+	width: 100%;
+	max-width: 480px;
+	font-size: 16px;
+}
+
+.pane section > * {
+	margin-top: 6px;
+}
+
+.pane h1 {
+	font-size: 24px;
+	font-weight: 700;
+	margin-bottom: 12px;
+}
+
+.pane .grid {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	gap: 6px 12px;
+}
+
+.pane .grid > * {
+	flex: 1 1 160px;
+}
+
+.pane .list {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+	gap: 6px 0;
+}
+
+.pane .list > * {
+	flex: none;
+}
+
+.pane .stat {
+	display: flex;
+	justify-content: space-between;
+}
+
+.pane .value {
 	font-size: 16px; 
+	text-align: right;
+}
+
+.pane .label {
+	font-size: 16px;
+	text-align: left;
+}
+
+.pane .button {
+	width: 100px;
+	height: 40px;
+	color: var(--button-text-color);
+	display: inline-block;
+	background-color: var(--button-background-color);
+	border-radius: 6px;
+	text-decoration: none;
+	text-align: center;
+	line-height: 40px;
+	font-weight: 700;
 }
 
 .heatmap {
@@ -261,14 +275,14 @@ main > * {
 
 .heatmap > div {
 	position: relative;
-	height: 24px;
+	height: 18px;
 }
 
 .heatmap .bar {
 	display: inline-block;
 	position: absolute;
 	border-radius: 6px;
-	background-color: var(--border-color);
+	background-color: var(--subtle-text-color);
 	min-width: 0;
 	height: 12px;
 	top: 6px;
@@ -278,6 +292,5 @@ main > * {
 .heatmap .label {
 	display: inline;
 	position: absolute;
-	font-size: 16px;
-	line-height: 24px;
+	line-height: 18px;
 }
