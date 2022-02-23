@@ -127,7 +127,9 @@ class Wordle {
 	}
 
 	updateDay() {
-		this.root.querySelector('#day').textContent = '#' + this.getCode();
+		let label = this.root.querySelector('#day');
+		label.textContent = '#' + this.getCode();
+		label.href = `/?day=${this.getCode()}`;
 	}
 
 	onComplete() {
