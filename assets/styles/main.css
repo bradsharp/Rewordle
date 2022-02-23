@@ -1,48 +1,46 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap');
 
 :root {
-	--header-height: 48px;
 	--green: #78B159;
 	--yellow: #FDCB58;
 	--red: #DD2E44;
-	--black: #020202;
-	--light-grey: #E6E7E8;
+	--black: #151515;
 	--grey: #A7A7A8;
-	--dark-grey: #31373D;
 	--white: #FEFEFE;
 	--shadow: rgba(49, 55, 61, 0.2);
+	--header-height: 48px;
 }
 
 body[theme=light] {
-	--background-color: var(--white);
-	--border-color: var(--light-grey);
-	--text-color: var(--black);
-	--icon-color: var(--light-grey);
-	--icon-hover-color: var(--black);
-	--subtle-text-color: var(--light-grey);
-	--button-background-color: var(--dark-grey);
-	--button-text-color: var(--white);
-	--keyboard-background-color: var(--light-grey);
-	--keyboard-text-color: var(--dark-grey);
-	--toast-background-color: var(--dark-grey);
-	--toast-text-color: var(--white);
-	--pane-background-color: var(--white);
+	--background-color: #FEFEFE;
+	--border-color: #E8E8E8;
+	--text-color: #2E2E2E;
+	--subtle-text-color: #E8E8E8;
+	--icon-color: #E8E8E8;
+	--icon-hover-color: #2E2E2E;
+	--button-background-color: #2E2E2E;
+	--button-text-color: #FEFEFE;
+	--keyboard-background-color: #E8E8E8;
+	--keyboard-text-color: #2E2E2E;
+	--toast-background-color: #2E2E2E;
+	--toast-text-color: #FEFEFE;
+	--pane-background-color: #FEFEFE;
 }
 
 body[theme=dark] {
-	--background-color: var(--black);
-	--border-color: var(--dark-grey);
-	--text-color: var(--white);
-	--icon-color: var(--dark-grey);
-	--icon-hover-color: var(--white);
-	--subtle-text-color: var(--dark-grey);
-	--button-background-color: var(--dark-grey);
-	--button-text-color: var(--white);
-	--keyboard-background-color: var(--light-grey);
-	--keyboard-text-color: var(--dark-grey);
-	--toast-background-color: var(--dark-grey);
-	--toast-text-color: var(--white);
-	--pane-background-color: var(--black);
+	--background-color: #212121;
+	--border-color: #2E2E2E;
+	--text-color: #A9A9A9;
+	--subtle-text-color: #2E2E2E;
+	--icon-color: #A9A9A9;
+	--icon-hover-color: #FEFEFE;
+	--button-background-color: #121212;
+	--button-text-color: #FEFEFE;
+	--keyboard-background-color: #121212;
+	--keyboard-text-color: #A9A9A9;
+	--toast-background-color: #121212;
+	--toast-text-color: #FEFEFE;
+	--pane-background-color: #212121;
 }
 
 html, body {

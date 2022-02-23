@@ -67,23 +67,23 @@
 }
 
 .letter[state=correct] {
-	background-color: var(--green);
-	color: var(--white);
+	background-color: var(--green) !important;
+	color: var(--white) !important;
 }
 
 .letter[state=valid] {
-	background-color: var(--yellow);
-	color: var(--white);
+	background-color: var(--yellow) !important;
+	color: var(--white) !important;
 }
 
 .letter[state=invalid] {
-	background-color: var(--grey);
-	color: var(--white);
+	background-color: var(--grey) !important;
+	color: var(--white) !important;
 }
 
 .letter[state=wrong] {
-	background-color: var(--red);
-	color: var(--white);
+	background-color: var(--red) !important;
+	color: var(--white) !important;
 }
 
 #game {
@@ -170,6 +170,7 @@
 	font-weight: 700;
 	text-align: center;
 	text-transform: uppercase;
+	text-decoration: none;
 }
 
 #game #keyboard {
@@ -184,7 +185,6 @@
 	justify-content: center;
 	grid-template-rows: 1fr;
 	height: 50px;
-	color: var(--dark-grey);
 	font-size: 14px;
 	font-weight: 700;
 }
@@ -210,12 +210,8 @@
 	border-radius: 4px;
 	border-width: 0;
 	font: inherit;
-	
 	cursor: pointer;
 	transition: background-color 0.2s, color 0.2s;
-}
-
-#game #keyboard button:not([state]) {
 	color: var(--keyboard-text-color);
 	background-color: var(--keyboard-background-color);
 }
@@ -225,4 +221,10 @@
 		background-color: var(--keyboard-text-color) !important;
 		color: var(--keyboard-background-color) !important;
 	}
+}
+
+#game #keyboard button:disabled {
+	color: var(--keyboard-background-color) !important;
+	background-color: inherit !important;
+	border: 1px solid var(--keyboard-background-color);
 }
