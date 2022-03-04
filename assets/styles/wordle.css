@@ -216,16 +216,16 @@
 	background-color: var(--keyboard-background-color);
 }
 
+#game #keyboard button[state=invalid] {
+	color: var(--keyboard-background-color) !important;
+	background-color: inherit !important;
+	border: 1px solid var(--keyboard-background-color);
+}
+
 @media (hover: hover) {
 	#game #keyboard button:hover {
 		background-color: var(--keyboard-text-color) !important;
 		color: var(--keyboard-background-color) !important;
+		border: none;
 	}
-}
-
-#game #keyboard button:disabled {
-	color: var(--keyboard-background-color) !important;
-	background-color: inherit !important;
-	border: 1px solid var(--keyboard-background-color);
-	cursor: default;
 }
