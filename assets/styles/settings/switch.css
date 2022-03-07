@@ -9,8 +9,8 @@
 	--switch-text-color: var(--button-text-color);
 	--switch-off-color: var(--button-background-color);
 	--switch-on-color: var(--button-background-color);
-	--switch-off-text: "Light";
-	--switch-on-text: "Dark";
+	--switch-off-text: "Off";
+	--switch-on-text: "On";
 }
 
 .switch input {
