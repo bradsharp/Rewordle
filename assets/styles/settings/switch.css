@@ -1,22 +1,19 @@
 .switch {
 	display: inline-block;
 	position: relative;
-	width: 64px;
+	width: 80px;
 	height: 36px;
 	box-sizing: border-box;
 	overflow: hidden;
-	background-color: var(--switch-background-color);
-	border: 1px solid var(--switch-color);
-	border-radius: 6px;
 	transition: 0.2s all;
 	--switch-text-color: var(--button-text-color);
-	--switch-color: var(--button-background-color);
-	--switch-background-color: var(--background-color);
-	--switch-off-text: "✕";
-	--switch-on-text: "✓";
+	--switch-off-color: var(--button-background-color);
+	--switch-on-color: var(--button-background-color);
+	--switch-off-text: "Light";
+	--switch-on-text: "Dark";
 }
 
-.switch .checkbox {
+.switch input {
 	position: absolute;
 	width: 100%;
 	height: 100%;
@@ -31,49 +28,59 @@
 	flex: none;
 	width: auto;
 	height: 100%;
-	border-radius: 6px;
-	color: var(--switch-text-color);
-	background-color: var(--switch-color);
+	background-color: var(--white);
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	padding: 6px;
+	padding: 0 6px;
 	transition: 0.2s all;
-}
-
-.switch .knob::before {
-	content: var(--switch-off-text);
-}
-
-.switch .checkbox:checked + .state .knob::before {
-	content: var(--switch-on-text);
+	box-sizing: border-box;
+	border-radius: 3px;
+	aspect-ratio: 1;
 }
 
 .switch .state {
+	box-sizing: border-box;
 	display: flex;
 	width: 100%;
 	height: 100%;
 	padding: 3px;
+	border-radius: 6px;
+	transition: 0.2s all;
+	background-color: var(--switch-on-color);
+	color: var(--switch-text-color);
+}
+
+.switch input:checked + .state {
+	background-color: var(--switch-off-color);
 }
 
 .switch .state::before, .switch .state::after {
-	content: '';
-	display :block;
 	transition: 0.2s all;
+	overflow: hidden;
+	flex-basis: 0;
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .switch .state::before {
+	content: var(--switch-on-text);
 	flex-grow: 1;
 }
 
 .switch .state::after {
+	content: var(--switch-off-text);
 	flex-grow: 10000;
+	font-size: inherit;
 }
 
-.switch .checkbox:checked + .state::before {
+.switch input:checked + .state::before {
 	flex-grow: 10000;
+	font-size: inherit;
 }
 
-.switch .checkbox:checked + .state::after {
+.switch input:checked + .state::after {
 	flex-grow: 1;
 }
