@@ -191,17 +191,12 @@ class Wordle {
 		})
 		return lines.join('\n');
 	}
-	
-	getCurrentDateWithTimezoneOffset() {
-    		var now = new Date();
-    		now.setMinutes(result.getMinutes() - now.getTimezoneOffset());
-    		return now;
-	}
 
 	load() {
 		let params = new URLSearchParams(window.location.search);
-		let now = getCurrentDateWithTimezoneOffset();
-		let currentDay = Math.floor(now / (1000 * 3600 * 24));
+		let nowUtc = new Date();
+		let nowLocalTimezone = nowUtc.getTime() - nowUtc.getTimezoneOffset() * 60 * 1000;
+		let currentDay = Math.floor(nowLocalTimezone / (1000 * 3600 * 24));
 		let customDay = parseInt(params.get('day') ?? '', 36);
 		let day = currentDay > customDay ? customDay : currentDay;
 		this.valid = day == currentDay;
