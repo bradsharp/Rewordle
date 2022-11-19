@@ -168,6 +168,12 @@ class Wordle {
 	isFinished() {
 		return this.solved || this.guesses.length >= GUESS_LIMIT;
 	}
+	
+	isValidDay(day, currentDay) {
+		if (day)
+			return day < currentDay + 1;
+		return false;
+	}
 
 	getCode() {
 		return this.day.toString(36).toUpperCase();
@@ -198,7 +204,7 @@ class Wordle {
 		let nowLocalTimezone = nowUtc.getTime() - nowUtc.getTimezoneOffset() * 60 * 1000;
 		let currentDay = Math.floor(nowLocalTimezone / (1000 * 3600 * 24));
 		let customDay = parseInt(params.get('day') ?? '', 36);
-		let day = currentDay > customDay ? customDay : currentDay;
+		let day = this.isValidDay(customDay, currentDay) ? customDay : currentDay;
 		this.valid = day == currentDay;
 		this.day = day;
 		if (this.day == WordleStorage.get('day')) {
