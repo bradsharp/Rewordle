@@ -12945,5 +12945,6 @@ var words = [
 	"geums",
 	"grits",
 	"kames",
-	"death"
+	"death",
+	"slave"
 ]
